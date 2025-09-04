@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Self Righteousness</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="quiz.css" />
+
+        <style>
+            /* Professional Engaging Spinner */
+            .tab-spinner {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 150px;
+                width: 100%;
+                position: relative;
+            }
+
+            /* Hide the original Font Awesome icon */
+            .tab-spinner i {
+                display: none;
+            }
+
+            /* Main spinner ring */
+            .tab-spinner::before {
+                content: "";
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                border: 3px solid rgba(74, 109, 167, 0.1);
+                border-top: 3px solid #4a6da7;
+                border-right: 3px solid #4a6da7;
+                box-shadow: 0 0 15px rgba(74, 109, 167, 0.1);
+                animation: spinClockwise 1.2s
+                    cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            }
+
+            .highlight {
+                color: #4a6da7;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+
+            /* Inner spinner ring */
+            .tab-spinner::after {
+                content: "";
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 3px solid rgba(74, 109, 167, 0.05);
+                border-bottom: 3px solid #4a6da7;
+                border-left: 3px solid #4a6da7;
+                animation: spinCounterClockwise 1.8s
+                    cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            }
+
+            /* Create the pulse effect */
+            @keyframes spinClockwise {
+                0% {
+                    transform: rotate(0deg) scale(1);
+                }
+                50% {
+                    transform: rotate(180deg) scale(1.1);
+                    border-top-color: #5b7fbf;
+                    border-right-color: #5b7fbf;
+                    box-shadow: 0 0 20px rgba(74, 109, 167, 0.4);
+                }
+                100% {
+                    transform: rotate(360deg) scale(1);
+                }
+            }
+
+            @keyframes spinCounterClockwise {
+                0% {
+                    transform: rotate(0deg) scale(1);
+                }
+                50% {
+                    transform: rotate(-180deg) scale(1.15);
+                    border-bottom-color: #5b7fbf;
+                    border-left-color: #5b7fbf;
+                }
+                100% {
+                    transform: rotate(-360deg) scale(1);
+                }
+            }
+
+            /* Add a subtle pulsating dot in the center */
+            .tab-spinner .center-dot {
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                background-color: #4a6da7;
+                border-radius: 50%;
+                animation: pulseDot 1.5s ease-in-out infinite;
+            }
+
+            @keyframes pulseDot {
+                0%,
+                100% {
+                    transform: scale(0.7);
+                    opacity: 0.5;
+                }
+                50% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                    box-shadow: 0 0 10px rgba(74, 109, 167, 0.6);
+                }
+            }
+
+            /* Keep your existing fade transition */
+            .tab-content {
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            .tab-content.active {
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Loading Screen -->
+        <div class="loader-container">
+            <div class="loader-logo">
+                <img src="./logo.png" alt="Sunday School Logo" />
+                <div class="pulse"></div>
+            </div>
+            <div class="ministry-name">Life Gate Ministries Worldwide</div>
+            <div class="loader-text">Loading Sunday School Lesson</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+
+        <div class="inner-logo-container">
+            <img src="./logo.png" alt="Sunday School Logo" class="logo" />
+        </div>
+
+        <button
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            aria-label="Toggle theme"
+            style="z-index: 99999"
+        >
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <div class="container">
+            <h1><b>SUNDAY SCHOOL LESSON</b></h1>
+            <h2>
+                <b>DATE: <span>September 7, 2025</span></b>
+            </h2>
+            <h2>
+                <b>TOPIC: SELF RIGHTEOUSNESS</b>
+            </h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="lessonProgress"></div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('intro')">
+                    Introduction
+                </button>
+                <button class="tab-btn" onclick="openTab('lesson')">
+                    Lesson
+                </button>
+
+                <button class="tab-btn" onclick="openTab('conclusion')">
+                    Conclusion
+                </button>
+                <button class="tab-btn" onclick="openTab('application')">
+                    Application
+                </button>
+
+                <button class="tab-btn" onclick="openTab('quiz')">Quiz</button>
+                <button class="tab-btn" onclick="openTab('prayer')">
+                    Prayer Points
+                </button>
+            </div>
+
+            <div id="tab-spinner" class="tab-spinner" style="display: none">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="intro" class="tab-content active">
+                <div class="memory-verse">
+                    <h1><b>🧠📝 Memory Verse</b></h1>
+                    <blockquote>
+                        <b>
+                            But we are all as an unclean thing, and all our
+                            righteousnesses are as filthy rags; and we all do
+                            fade as a leaf; and our iniquities, like the wind,
+                            have taken us away. - Isa. 64:6
+                        </b>
+
+                        <br />
+                        <button
+                            onclick="showBibleVersions('Isaiah 64:6')"
+                            class="verse-btn btn-sm"
+                        >
+                            📖 Read Other Versions
+                        </button>
+                    </blockquote>
+                </div>
+                <h2><b>Text: Matthew 19:16-22 📚</b></h2>
+                <blockquote>
+                    <button
+                        onclick="showBibleVersions('Matthew 19:16-22')"
+                        class="verse-btn btn-sm"
+                    >
+                        📖 Read Matthew 19:16-22
+                    </button>
+                </blockquote>
+
+                <h2><b>INTRODUCTION</b> 🧠✨📖</h2>
+                <p>
+                    Self righteous is the righteousness achieved through
+                    personal standard and therefore not accepted by God. Many
+                    people are righteous in their own eyes because they joined a
+                    church. Others claim to be because professed Christian are
+                    not as 0hilantropic as they are. Some also conclude on their
+                    righteousness just because someone they knew as a sinner is
+                    recognized as a Christian. The truth is that, the standard
+                    for righteousness is set by God and not by man. Matt. 5:20.
+                    <button
+                        onclick="showBibleVersions('Matthew 5:20')"
+                        class="verse-btn btn-sm"
+                    >
+                        📖 Read Matthew 5:20
+                    </button>
+                </p>
+
+                <div class="aims-objectives">
+                    <h3><b>AIMS AND OBJECTIVES</b> 🎯📖💡</h3>
+                    <p>
+                        <strong>AIMS:</strong> To create the awarenness of the
+                        risk of self roghteousness.
+                    </p>
+
+                    <p>
+                        <strong>OBJECTIVES:</strong>
+                        That our righteousness may not me God forsaken but God
+                        accepted.
+                    </p>
+                </div>
+            </div>
+
+            <div id="lesson" class="tab-content">
+                <h2><b>Text: Matthew 19:16-22 📚</b></h2>
+                <blockquote>
+                    <button
+                        onclick="showBibleVersions('Matthew 19:16-22')"
+                        class="verse-btn btn-sm"
+                    >
+                        📖 Read Matthew 19:16-22
+                    </button>
+                </blockquote>
+
+                <div class="lesson-section">
+                    <h3><b>Text Review/Lesson 🧠💡</b></h3>
+                    <p><span>🌱🌷🌼🌿🌻🌺🍀🌳🌴🪴🏡🐝🐞</span> <br /></p>
+
+                    <p>
+                        This man was not wrong when he considered jesus as the
+                        authority of God and came to him. However, his little
+                        adventure was to confirm that the trophy of
+                        righteousness he brought by his standard. Jesus, in
+                        response to him touched the are of his standard first
+                        and later his areas of failure that vandalises his
+                        righteousness.
+                    </p>
+
+                    <ol>
+                        <li>
+                            <b>The Price of Eternal Life: Verse 16</b>
+                            <p>
+                                The question ofthe man and the response if
+                                Christ reveals that eternal life has a price and
+                                that is obey the commandment of God. Your own
+                                standard will deliver you to hell and
+                                destruction.
+                                <br>
+                                <button
+                                    onclick="showBibleVersions('Matthew 19:16')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    📖 Read Matthew 19:16
+                                </button>
+                            </p>
+                        </li>
+                        <li>
+                            <b>Only God Sets The Standard: Verse 17</b>
+                            <p>
+                                Though people do, but it is not the power for
+                                any man to set the standard for righteousness.
+                                Only God has the singular authority to do that.
+                                This is why anyone will fall short comparing
+                                with another instead of obeying God's command.
+
+                                <br />
+                                <button
+                                    onclick="showBibleVersions('Matthew 19:17')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    📖 Read Matthew 19:17
+                                </button>
+                            </p>
+                        </li>
+                        <li>
+                            <b>The Ten Commandment Not the Only Standard:
+                                Verse 18-21</b>
+                            <p>
+                                Many of us concentrate on areas of choice, keep
+                                them strictly and brag about righteousness while
+                                some others are loft uncomplied with. You are
+                                not perfect by keeping some of the commandments
+                                but all. James 2:10-11. This man kept some
+                                commandment but neither gave to the poor not the
+                                <ema>kingdom of Heaven</ema>. He was not also a
+                                follower of Christ. He was among those who
+                                honour God with their lips but far from God.
+                                Matt. 15:8. He was the man that did the work of
+                                God as he he pleases and not as God pleases
+                                (Verse 22). Child of God, does this man look
+                                like you? Please cosider yourself and ammend.
+
+                                <br />
+                                <button
+                                    onclick="showBibleVersions('Matthew 19:18-21')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    📖 Read Matthew 19:18-21
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('James 2:10-11')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    📖 Read James 2:10-11
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Matthew 15:8')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    📖 Read Matthew 15:8
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Matthew 19:22')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    📖 Read Matthew 19:22
+                                </button>
+                            </p>
+                        </li>
+
+                        <li>
+                            <b>Treasure In Heaven: Verse 21</b>
+                            <p>
+                                All the righteous, according to God's standard
+                                shall possess treasure in heaven, some of which,
+                                will precipitate and fall back as harvest rain
+                                on the individual's initiator. Verse 28-29,
+                                Eccl. 11:1-3.
+
+                                <br />
+                                <button
+                                    onclick="showBibleVersions('Matthew 19:21')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    Matthew 19:21
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Matthew 19:28-29')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    Matthew 19:28-29
+                                </button>
+                                <button
+                                    onclick="showBibleVersions('Ecclesiastes 11:1-3')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    Ecclesiastes 11:1-3
+                                </button>
+                            </p>
+                        </li>
+                        <li>
+                            <b>Obedience is a Personal Choice:Verse 22</b>
+                            <p>
+                                The man heard and went away sad but he could
+                                also have remained if he wanted. God sets the
+                                atandards but he choice to obey lies with the
+                                individuals.
+
+                                <br />
+                                <button
+                                    onclick="showBibleVersions('Matthew 19:22')"
+                                    class="verse-btn btn-sm"
+                                >
+                                    Matthew 19:22
+                                </button>
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="conclusion" class="tab-content">
+                <h2>Conclusion 📜</h2>
+                <p>
+                    Live according to God’s standard and not your feeling or
+                    instinct and you shall be righteous in God’s eyes.
+                </p>
+            </div>
+
+            <div id="application" class="tab-content">
+    <h2>Personal Application 🧠🙏</h2>
+    <div class="reflection-section">
+        <div class="interactive-cards">
+            <!-- Understanding Check -->
+            <div class="reflection-card">
+                <h3>
+                    My Attitude Toward God’s Standard 🙇‍♂️📖
+                </h3>
+                <p>
+                    On a scale of 1 to 10, how much do you rely on God’s
+                    standard of righteousness instead of your own works or
+                    personal standard? (Matthew 19:17; Romans 3:21–22)
+                </p>
+                <div class="rating-container">
+                    <input
+                        type="range"
+                        min="1"
+                        max="10"
+                        value="5"
+                        class="love-slider"
+                        id="righteousnessRating"
+                    />
+                    <span class="rating-value">5/10</span>
+                </div>
+                <div class="rating-feedback"></div>
+            </div>
+
+            <!-- Action Plan -->
+            <div class="reflection-card">
+                <h3>Action Steps: Living by God’s Standard ✝️🌿</h3>
+                <div class="action-items">
+                    <div class="action-item">
+                        <input type="checkbox" id="action1" />
+                        <label for="action1">
+                            Obey God’s commandments sincerely, not selectively.
+                        </label>
+                    </div>
+                    <div class="action-item">
+                        <input type="checkbox" id="action2" />
+                        <label for="action2">
+                            Avoid boasting in personal achievements; give glory
+                            to God (James 2:10–11).
+                        </label>
+                    </div>
+                    <div class="action-item">
+                        <input type="checkbox" id="action3" />
+                        <label for="action3">
+                            Give generously to the poor and invest in treasure
+                            in heaven (Matthew 19:21).
+                        </label>
+                    </div>
+                    <div class="action-item">
+                        <input type="checkbox" id="action4" />
+                        <label for="action4">
+                            Choose daily obedience as a personal decision, not
+                            just an outward show (Matthew 15:8; 19:22).
+                        </label>
+                    </div>
+                    <button class="add-action-btn">
+                        Add Personal Action
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Journal -->
+        <div class="reflection-journal">
+            <h3>Reflection Journal ✍️📖</h3>
+            <div class="journal-prompts">
+                <div class="prompt active">
+                    <p>
+                        What lesson stood out most to you about relying on your
+                        own righteousness versus God’s standard?
+                    </p>
+                    <textarea
+                        class="reflection-input"
+                        placeholder="Write your thoughts here..."
+                    ></textarea>
+                </div>
+                <div class="prompt">
+                    <p>
+                        Can you recall a time you relied on personal effort
+                        instead of God’s grace? What was the outcome and what
+                        did you learn?
+                    </p>
+                    <textarea
+                        class="reflection-input"
+                        placeholder="Reflect on your experience and growth..."
+                    ></textarea>
+                </div>
+                <div class="prompt">
+                    <p>
+                        What one step will you take this week to seek treasure
+                        in heaven rather than earthly possessions?
+                    </p>
+                    <textarea
+                        class="reflection-input"
+                        placeholder="Be specific with your plan..."
+                    ></textarea>
+                </div>
+                <div class="prompt-nav">
+                    <button class="prev-prompt" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <span class="prompt-counter">1/3</span>
+                    <button class="next-prompt">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commitment Section -->
+        <div class="commitment-section">
+            <h3>Personal Commitment 📜🖊️</h3>
+            <p>Based on today’s lesson, I commit to:</p>
+            <input
+                type="text"
+                class="commitment-input"
+                placeholder="e.g., Following God’s standard, giving to the poor, and seeking treasure in heaven..."
+            />
+            <button class="save-commitment">Make Commitment</button>
+            <div class="saved-commitments">
+                <h4>My Commitments 📂💬</h4>
+                <ul class="commitment-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="application-summary" style="margin-top: 2rem">
+        <h3>Summary & Challenge</h3>
+        <p>
+            Today’s lesson reminds us that eternal life is not earned by human
+            effort but by obedience to God’s standard and following Christ. The
+            rich young man failed because he trusted in his wealth and personal
+            righteousness instead of surrendering to God. Let us not make the
+            same mistake.
+        </p>
+        <ul>
+            <li>
+                Pray daily for a heart that values obedience more than personal
+                achievement.
+            </li>
+            <li>
+                Take one step this week to “lay up treasure in heaven” through
+                generosity or service.
+            </li>
+            <li>
+                Share this truth with someone who trusts in their own works
+                rather than God’s grace.
+            </li>
+        </ul>
+        <p>
+            <b>Memory Verse:</b> “For what is a man profited, if he shall gain
+            the whole world, and lose his own soul?” – <i>Matthew 16:26</i>
+        </p>
+    </div>
+</div>
+
+
+            <link rel="stylesheet" href="theme.css" />
+            <div id="quiz" class="tab-content">
+                <div class="quiz-container">
+                    <h3>Speed Quiz Challenge 🎯</h3>
+                    <div class="speed-quiz-container">
+                        <div class="quiz-stats">
+                            <div class="timer">
+                                ⏱️ Time: <span id="timer">50</span>s
+                            </div>
+                            <div class="score">
+                                Score: <span id="speed-score">0</span>
+                            </div>
+                        </div>
+                        <div id="question-container" class="question-display">
+                            <h4 style="color: green">Get Ready!</h4>
+                            <p style="color: green">
+                                Answer quickly for bonus points!
+                            </p>
+                        </div>
+
+                        <div class="answer-buttons">
+                            <button class="speed-btn" onclick="checkAnswer(0)">
+                                A
+                            </button>
+                            <button class="speed-btn" onclick="checkAnswer(1)">
+                                B
+                            </button>
+                            <button class="speed-btn" onclick="checkAnswer(2)">
+                                C
+                            </button>
+                            <button class="speed-btn" onclick="checkAnswer(3)">
+                                D
+                            </button>
+                        </div>
+
+                        <div class="controls">
+                            <button
+                                onclick="startSpeedQuiz()"
+                                class="start-btn"
+                            >
+                                Start Quiz
+                            </button>
+                            <button
+                                onclick="resetSpeedQuiz()"
+                                class="reset-btn"
+                            >
+                                Reset
+                            </button>
+                        </div>
+
+                        <div id="feedback" class="feedback"></div>
+                    </div>
+                </div>
+
+                <style>
+                    .quiz-container {
+                        padding: 15px;
+                        max-width: 100%;
+                    }
+
+                    .quiz-stats {
+                        display: flex;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                        margin-bottom: 15px;
+                        font-size: 16px;
+                    }
+
+                    .question-display {
+                        margin: 15px 0;
+                        padding: 10px;
+                        border-radius: 8px;
+                        /* background: #f5f5f5; */
+                        word-wrap: break-word;
+                    }
+
+                    .answer-buttons {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 10px;
+                        margin: 15px 0;
+                    }
+
+                    .speed-btn {
+                        padding: 12px;
+                        font-size: 16px;
+                        border-radius: 8px;
+                        border: 2px solid #4a6da7;
+                        /* background: white; */
+                        min-height: 44px;
+                        touch-action: manipulation;
+                    }
+
+                    .controls {
+                        display: flex;
+                        gap: 10px;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                    }
+
+                    .start-btn,
+                    .reset-btn {
+                        padding: 12px 24px;
+                        font-size: 16px;
+                        border-radius: 8px;
+                        min-width: 120px;
+                        touch-action: manipulation;
+                    }
+
+                    .badge {
+                        padding: 8px 16px;
+                        margin: 10px 0;
+                        width: 100%;
+                        text-align: center;
+                        font-size: 14px;
+                    }
+
+                    .performance-chart-container {
+                        width: 100%;
+                        max-width: 100%;
+                        overflow-x: auto;
+                        margin-top: 15px;
+                    }
+
+                    @media (max-width: 480px) {
+                        .quiz-stats {
+                            font-size: 14px;
+                        }
+
+                        .speed-btn {
+                            padding: 10px;
+                            font-size: 14px;
+                        }
+
+                        .start-btn,
+                        .reset-btn {
+                            padding: 10px 20px;
+                            font-size: 14px;
+                            min-width: 100px;
+                        }
+                    }
+                </style>
+
+                <!-- Rest of your quiz JavaScript code remains the same -->
+                <script>
+                    
+
+                    const speedQuestions = [
+    {
+        q: "What question did the rich young ruler ask Jesus in Matthew 19:16?",
+        a: [
+            "How can I gain wealth?",
+            "What good thing shall I do to have eternal life?",
+            "Who is the greatest in the kingdom?",
+            "Why do bad things happen?",
+        ],
+        correct: 1,
+        match: 0,
+    },
+    {
+        q: "According to Matthew 19:17, who alone is good and sets the standard for righteousness?",
+        a: [
+            "Man",
+            "Angels",
+            "God",
+            "Prophets",
+        ],
+        correct: 2,
+        match: 0,
+    },
+    {
+        q: "What commandments did Jesus mention to the rich young ruler? (Matthew 19:18–19)",
+        a: [
+            "Love your neighbor, do not steal, honor father and mother, do not kill, do not bear false witness",
+            "Keep the Sabbath only",
+            "Offer sacrifices daily",
+            "Do not eat unclean food",
+        ],
+        correct: 0,
+        match: 0,
+    },
+    {
+        q: "What additional instruction did Jesus give after the man claimed to keep the commandments? (Matthew 19:21)",
+        a: [
+            "Build a synagogue",
+            "Sell what you have, give to the poor, and follow Me",
+            "Pray three times daily",
+            "Travel to Jerusalem",
+        ],
+        correct: 1,
+        match: 0,
+    },
+    {
+        q: "Why did the rich young ruler go away sorrowful? (Matthew 19:22)",
+        a: [
+            "He was very wealthy",
+            "He didn’t believe in eternal life",
+            "He was too young",
+            "He didn’t understand Jesus’ words",
+        ],
+        correct: 0,
+        match: 0,
+    },
+    {
+        q: "What lesson do we learn from James 2:10–11 in relation to this story?",
+        a: [
+            "Keeping some commandments makes us perfect",
+            "If you break one commandment, you are guilty of all",
+            "Only the Ten Commandments matter",
+            "Faith is not important",
+        ],
+        correct: 1,
+        match: 0,
+    },
+    {
+        q: "According to Matthew 15:8, what danger do people face when honoring God only with lips?",
+        a: [
+            "They draw near in truth",
+            "They are far from Him in heart",
+            "They receive double blessings",
+            "They are always forgiven",
+        ],
+        correct: 1,
+        match: 0,
+    },
+    {
+        q: "What does Ecclesiastes 11:1–3 encourage believers to do?",
+        a: [
+            "Cast your bread upon the waters and trust God for harvest",
+            "Keep all wealth for yourself",
+            "Avoid giving to others",
+            "Do not plan for the future",
+        ],
+        correct: 0,
+        match: 0,
+    },
+    {
+        q: "Which verses show that true treasure is in heaven, not on earth?",
+        a: [
+            "Matthew 19:28–29; Ecclesiastes 11:1–3",
+            "Genesis 1:1; Psalm 23",
+            "Exodus 20:1–2; Numbers 6:24",
+            "Acts 2:1–4; Romans 12:1",
+        ],
+        correct: 0,
+        match: 0,
+    },
+    {
+        q: "What is the key challenge of this lesson?",
+        a: [
+            "Obeying God’s full standard, not selective righteousness",
+            "Gaining as much wealth as possible",
+            "Memorizing the whole Bible",
+            "Becoming a church leader",
+        ],
+        correct: 0,
+        match: 0,
+    },
+];
+
+
+
+                    let currentQuestion = 0;
+                    let timeLeft = 50;
+                    let timer;
+                    let score = 0;
+                    let isQuizActive = false;
+                    let questionResults = [];
+
+                    // ... other functions stay the same until endQuiz() ...
+                    function getPerformanceBadge(score) {
+    if (score >= 150) {
+        return `<div class="badge gold">
+                    <i class="fas fa-cross"></i>
+                    <span>Guardian of Holy Things</span>
+                </div>`;
+    } else if (score >= 100) {
+        return `<div class="badge silver">
+                    <i class="fas fa-church"></i>
+                    <span>Keeper of Reverence</span>
+                </div>`;
+    } else if (score >= 50) {
+        return `<div class="badge bronze">
+                    <i class="fas fa-praying-hands"></i>
+                    <span>Servant of Obedience</span>
+                </div>`;
+    } else if (score >= 30) {
+        return `<div class="badge beginner">
+                    <i class="fas fa-book-bible"></i>
+                    <span>Student of Holiness</span>
+                </div>`;
+    }
+    return `<div class="badge beginner">
+                <i class="fas fa-dove"></i>
+                <span>Seeker of Reverence</span>
+            </div>`;
+}
+
+                    function startSpeedQuiz() {
+                        if (isQuizActive) return;
+                        isQuizActive = true;
+                        score = 0;
+                        timeLeft = 100;
+                        currentQuestion = 0;
+                        questionResults = [];
+                        document.getElementById("speed-score").textContent =
+                            score;
+                        showQuestion();
+                        startTimer();
+                    }
+
+                    function showQuestion() {
+                        if (currentQuestion >= speedQuestions.length) {
+                            endQuiz();
+                            return;
+                        }
+                        const q = speedQuestions[currentQuestion];
+                        document.getElementById(
+                            "question-container"
+                        ).innerHTML = `
+                                <h4>Question ${currentQuestion + 1} of ${
+                            speedQuestions.length
+                        }:</h4>
+                                <p>${q.q}</p>
+                            `;
+                        document
+                            .querySelectorAll(".speed-btn")
+                            .forEach((btn, i) => {
+                                btn.textContent = q.a[i];
+                            });
+                    }
+
+                    function checkAnswer(choice) {
+                        if (!isQuizActive) return;
+                        const correct =
+                            speedQuestions[currentQuestion].correct === choice;
+                        const timebonus = Math.floor(timeLeft / 10);
+                        const pointsEarned = correct ? 10 + timebonus : 0;
+
+                        questionResults.push({
+                            question: currentQuestion + 1,
+                            correct: correct,
+                            points: pointsEarned,
+                            timeBonus: timebonus,
+                            match: speedQuestions[currentQuestion].match,
+                        });
+
+                        if (correct) {
+                            score += pointsEarned;
+                        }
+
+                        const feedback = document.getElementById("feedback");
+                        feedback.textContent = correct
+                            ? `Correct! +${pointsEarned} points`
+                            : "Wrong! Try the next question";
+                        feedback.className = `feedback ${
+                            correct ? "correct" : "wrong"
+                        }`;
+
+                        document.getElementById("speed-score").textContent =
+                            score;
+                        currentQuestion++;
+                        setTimeout(() => {
+                            feedback.textContent = "";
+                            showQuestion();
+                        }, 1000);
+                    }
+
+                    function startTimer() {
+                        timer = setInterval(() => {
+                            timeLeft--;
+                            document.getElementById("timer").textContent =
+                                timeLeft;
+                            if (timeLeft <= 0) endQuiz();
+                        }, 1000);
+                    }
+
+                    function createPerformanceChart() {
+                        const ctx = document.createElement("canvas");
+                        ctx.id = "performanceChart";
+                        ctx.style.marginTop = "20px";
+                        // Set minimum height for mobile
+                        ctx.style.minHeight = "300px"; // Added minimum height
+
+                        const labels = questionResults.map(
+                            (r) => `Q${r.question}`
+                        );
+                        const pointsData = questionResults.map((r) => r.points);
+                        const backgroundColors = questionResults.map(
+                            (r) =>
+                                r.correct
+                                    ? "rgba(75, 192, 192, 0.6)"
+                                    : "rgba(255, 0, 0, 0.6)" // Changed to pure red
+                        );
+                        const borderColors = questionResults.map(
+                            (r) =>
+                                r.correct
+                                    ? "rgba(75, 192, 192, 1)"
+                                    : "rgba(255, 0, 0, 1)" // Changed to pure red
+                        );
+
+                        new Chart(ctx, {
+                            type: "bar",
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        label: "Points per Question",
+                                        data: pointsData,
+                                        backgroundColor: backgroundColors,
+                                        borderColor: borderColors,
+                                        borderWidth: 1,
+                                    },
+                                ],
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                aspectRatio: 1,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        title: {
+                                            display: true,
+                                            text: "Points",
+                                        },
+                                    },
+                                    x: {
+                                        title: {
+                                            display: true,
+                                            text: "Questions",
+                                        },
+                                    },
+                                },
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: "Performance Breakdown",
+                                    },
+                                    legend: {
+                                        display: false,
+                                    },
+                                },
+                            },
+                        });
+                        return ctx;
+                    }
+
+                    function endQuiz() {
+                        isQuizActive = false;
+                        clearInterval(timer);
+                        const questionsAttempted = currentQuestion;
+                        const correctAnswers = questionResults.filter(
+                            (r) => r.correct
+                        ).length;
+                        const scorePercentage = Math.round(
+                            (correctAnswers / speedQuestions.length) * 100
+                        );
+
+                        const container =
+                            document.getElementById("question-container");
+                        container.innerHTML = `
+                            <h4>Quiz Complete!</h4>
+                            ${getPerformanceBadge(score)}
+                            <p>Questions Attempted: ${questionsAttempted} of ${
+                            speedQuestions.length
+                        }</p>
+                            <p>Final Score: ${score} points</p>
+                            <p>Performance: ${scorePercentage}%</p>
+                            <p>Time Remaining: ${timeLeft}s</p>
+                            <p>${getScoreMessage(score)}</p>
+                            
+                            <div class="share-buttons">
+                                <button onclick="shareToWhatsApp()" class="share-btn whatsapp">
+                                    <i class="fab fa-whatsapp"></i> Share to WhatsApp
+                                </button>
+                                <button onclick="shareToFacebook()" class="share-btn facebook">
+                                    <i class="fab fa-facebook"></i> Share to Facebook
+                                </button>
+                            </div>
+
+                            <div class="performance-chart-container"></div>
+                        `;
+
+                        container
+                            .querySelector(".performance-chart-container")
+                            .appendChild(createPerformanceChart());
+
+                        // Add styles for share buttons
+                        const style = document.createElement("style");
+                        style.textContent = `
+                            .share-buttons {
+                                display: flex;
+                                gap: 10px;
+                                margin: 15px 0;
+                                justify-content: center;
+                            }
+                            .share-btn {
+                                padding: 10px 20px;
+                                border: none;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                gap: 8px;
+                                color: white;
+                                font-size: 14px;
+                            }
+                            .whatsapp {
+                                background-color: #25D366;
+                            }
+                            .facebook {
+                                background-color: #1877F2;
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+
+                    function shareToWhatsApp() {
+                        const text = `🎯 Bible Quiz Result!\n
+                📊 My Score: ${score} points\n
+                ⭐ Performance: ${Math.round(
+                    (questionResults.filter((r) => r.correct).length /
+                        speedQuestions.length) *
+                        100
+                )}%\n
+                🎮 Try the quiz yourself at: ${window.location.href}`;
+
+                        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+                            text
+                        )}`;
+                        window.open(whatsappUrl, "_blank");
+                    }
+
+                    function shareToFacebook() {
+                        const text = `I scored ${score} points in the Bible Quiz! Can you beat my score?`;
+                        const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                            window.location.href
+                        )}&quote=${encodeURIComponent(text)}`;
+                        window.open(fbUrl, "_blank", "width=600,height=400");
+                    }
+
+                    // ... (keep remaining functions the same) ...
+                    function getScoreMessage(score) {
+                        if (score >= 150) {
+                            return "Outstanding! You have excellent knowledge of tithing principles!";
+                        } else if (score >= 100) {
+                            return "Great work! You understand tithing concepts well!";
+                        } else if (score >= 50) {
+                            return "Good effort! Keep studying to improve your understanding.";
+                        } else if (score >= 30) {
+                            return "Keep learning! Review the lesson materials for better understanding.";
+                        }
+                        return "Don't give up! Review the lesson and try again.";
+                    }
+
+                    function resetSpeedQuiz() {
+                        isQuizActive = false;
+                        clearInterval(timer);
+                        score = 0;
+                        timeLeft = 100;
+                        currentQuestion = 0;
+                        questionResults = [];
+                        document.getElementById("speed-score").textContent =
+                            "0";
+                        document.getElementById("timer").textContent = "100";
+                        document.getElementById("feedback").textContent = "";
+                        document.getElementById(
+                            "question-container"
+                        ).innerHTML = `
+                                <h4 style="color:green">Get Ready!</h4>
+                                <p style="color:green">Answer quickly for bonus points!</p>
+                            `;
+                    }
+
+                    // Initialize quiz on page load
+                    document.addEventListener("DOMContentLoaded", () => {
+                        resetSpeedQuiz();
+                    });
+                </script>
+            </div>
+
+            <link rel="stylesheet" href="prayer.css" />
+
+         <div id="prayer" class="tab-content">
+    <h2>
+        Prayer Points – Living by God’s Standard & Seeking Treasure in Heaven
+    </h2>
+    <div class="prayer-section">
+        <div class="prayer-points">
+            <div class="prayer-item">
+                <div class="prayer-text">
+                    Lord, forgive me for every time I trusted in my own
+                    righteousness instead of Your standard. Help me to fully
+                    depend on Christ. 
+                </div>
+            </div>
+            <div class="prayer-item">
+                <div class="prayer-text">
+                    Father, give me a humble heart to obey all Your
+                    commandments and not to pick and choose what suits me.
+                </div>
+            </div>
+            <div class="prayer-item">
+                <div class="prayer-text">
+                    Holy Spirit, deliver me from the love of possessions and
+                    selfishness. Teach me to give freely and store up treasure
+                    in heaven.
+                </div>
+            </div>
+            <div class="prayer-item">
+                <div class="prayer-text">
+                    Lord Jesus, help me to follow You wholeheartedly, not just
+                    with my lips, but with my heart and actions.
+                </div>
+            </div>
+            <div class="prayer-item">
+                <div class="prayer-text">
+                    Father, strengthen me to make obedience a daily personal
+                    choice and not walk away from You like the rich young ruler.
+                </div>
+            </div>
+            <div class="prayer-item">
+                <div class="prayer-text">
+                    I declare: I will live by God’s standard, seek treasure in
+                    heaven, walk in obedience, and encourage others to follow
+                    Christ. Amen.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- Chart.js -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+                // Initialize Chart
+                const ctx = document
+                    .getElementById("tithingChart")
+                    .getContext("2d");
+                const tithingChart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+                        datasets: [
+                            {
+                                label: "Tithe Given",
+                                data: [0, 0, 0, 0],
+                                backgroundColor: "#4a6da7",
+                                borderColor: "#4a6da7",
+                                borderWidth: 1,
+                            },
+                        ],
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 1,
+                            },
+                        },
+                    },
+                });
+
+                // Update chart when checkboxes are clicked
+                function updateChart() {
+                    const weeks = ["week1", "week2", "week3", "week4"];
+                    const newData = weeks.map((id) =>
+                        document.getElementById(id).checked ? 1 : 0
+                    );
+                    tithingChart.data.datasets[0].data = newData;
+                    tithingChart.update();
+                }
+
+                // Update progress bar
+                function updateProgress() {
+                    const total = 7; // 4 weeks + 3 verses
+                    const checked = document.querySelectorAll(
+                        '#assignment input[type="checkbox"]:checked'
+                    ).length;
+                    const percent = (checked / total) * 100;
+
+                    document.getElementById("assignmentProgress").style.width =
+                        percent + "%";
+                    document.getElementById("progressText").textContent =
+                        Math.round(percent) + "% Complete";
+
+                    updateChart();
+                }
+
+                // Save reflection
+                function saveReflection() {
+                    const reflection =
+                        document.getElementById("reflectionText").value;
+                    localStorage.setItem("tithingReflection", reflection);
+                    alert("Reflection saved!");
+                }
+
+                // Load reflection on page load
+                document.addEventListener("DOMContentLoaded", () => {
+                    const saved = localStorage.getItem("tithingReflection");
+                    if (saved) {
+                        document.getElementById("reflectionText").value = saved;
+                    }
+                });
+            </script>
+
+            <!-- Add this modal for Bible versions -->
+            <div id="verse-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="verse-reference"></h2>
+                    <div class="version-tab">
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('KJV')"
+                        >
+                            KJV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NKJV')"
+                        >
+                            NKJV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NIV')"
+                        >
+                            NIV
+                        </button>
+                        <!-- <button
+                            class="version-btn"
+                            onclick="showVersion('NIV')"
+                        >
+                            NIV
+                        </button> -->
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('ESV')"
+                        >
+                            ESV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('AMP')"
+                        >
+                            AMP
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NLT')"
+                        >
+                            NLT
+                        </button>
+                    </div>
+                    <div id="verse-text"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Replace your existing font controls with this -->
+        <div class="font-controls">
+            <button
+                onclick="adjustFontSize(-1)"
+                aria-label="Decrease font size"
+            >
+                <i class="fas fa-minus"></i>
+            </button>
+            <span class="font-size">16px</span>
+            <button onclick="adjustFontSize(1)" aria-label="Increase font size">
+                <i class="fas fa-plus"></i>
+            </button>
+            <select
+                class="font-family-select"
+                onchange="changeFont(this.value)"
+            >
+                <option value="'Segoe UI', sans-serif">Default</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="'Times New Roman', serif">
+                    Times New Roman
+                </option>
+                <option value="'Comic Sans MS', cursive">Comic Sans</option>
+            </select>
+        </div>
+
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            $(function () {
+                let tab = $("tab");
+                tab.click(function () {
+                    alert;
+                });
+            });
+        </script>
+
+        <script>
+            // Loading Screen
+            window.addEventListener("load", function () {
+                setTimeout(() => {
+                    document.querySelector(".loader-container").style.display =
+                        "none";
+                }, 2000);
+            });
+
+            // // Tab Functionality
+            function openTab(tabName) {
+                const tabContents =
+                    document.getElementsByClassName("tab-content");
+                const tabButtons = document.getElementsByClassName("tab-btn");
+                const spinner = document.getElementById("tab-spinner");
+
+                for (let content of tabContents) {
+                    content.classList.remove("active");
+                    content.style.display = "none";
+                }
+
+                for (let button of tabButtons) {
+                    button.classList.remove("active");
+                }
+
+                document.getElementById(tabName).classList.add("active");
+                event.currentTarget.classList.add("active");
+
+                spinner.style.display = "flex";
+
+                setTimeout(() => {
+                    // Hide spinner
+                    spinner.style.display = "none";
+
+                    // Show selected tab content
+                    const selectedTab = document.getElementById(tabName);
+                    selectedTab.style.display = "block";
+
+                    // Trigger a reflow before adding the active class for animation
+                    void selectedTab.offsetWidth;
+
+                    // Add active class to fade in the content
+                    selectedTab.classList.add("active");
+
+                    // Update progress if needed
+                    updateProgress();
+                }, 800); // Adjust loading time as needed (800ms)
+            }
+
+            // Theme Toggle
+
+            function toggleTheme() {
+                document.body.classList.toggle("dark-mode");
+                const icon = document.querySelector(".theme-toggle i");
+                icon.classList.toggle("fa-moon");
+                icon.classList.toggle("fa-sun");
+            }
+
+            // Add these functions to your existing JavaScript
+
+            function showBibleVersions(reference) {
+                const modal = document.getElementById("verse-modal");
+                const verseRef = document.getElementById("verse-reference");
+                verseRef.textContent = reference;
+                modal.style.display = "block";
+                document.body.classList.add("modal-open");
+                showVersion(preferredVersion);
+            }
+
+            const bibleVerses = {
+                "Isaiah 64:6": {
+                    KJV: "<b>6</b> But we are all as an unclean thing, and all our righteousnesses are as filthy rags; and we all do fade as a leaf; and our iniquities, like the wind, have taken us away.",
+                    NKJV: "<b>6</b> But we are all like an unclean thing, And all our righteousnesses are like filthy rags; We all fade as a leaf, And our iniquities, like the wind, Have taken us away.",
+                    NIV: "<b>6</b> All of us have become like one who is unclean, and all our righteous acts are like filthy rags; we all shrivel up like a leaf, and like the wind our sins sweep us away.",
+                    ESV: "<b>6</b> We have all become like one who is unclean, and all our righteous deeds are like a polluted garment. We all fade like a leaf, and our iniquities, like the wind, take us away.",
+                    AMP: "<b>6</b> For we all have become like one who is [ceremonially] unclean [like a leper], And all our deeds of righteousness are like filthy rags; We all wither and decay like a leaf, And our wickedness [our sin, our injustice, our wrongdoing], like the wind, takes us away [carrying us far from God’s favor, toward destruction].",
+                    NLT: "<b>6</b> We are all infected and impure with sin. When we display our righteous deeds, they are nothing but filthy rags. Like autumn leaves, we wither and fall, and our sins sweep us away like the wind."
+                },
+
+                "Matthew 19:16-22": {
+                    KJV: "<b>16</b> And, behold, one came and said unto him, Good Master, what good thing shall I do, that I may have eternal life? <b>17</b> And he said unto him, Why callest thou me good? there is none good but one, that is, God: but if thou wilt enter into life, keep the commandments. <b>18</b> He saith unto him, Which? Jesus said, Thou shalt do no murder, Thou shalt not commit adultery, Thou shalt not steal, Thou shalt not bear false witness, <b>19</b> Honour thy father and thy mother: and, Thou shalt love thy neighbour as thyself. <b>20</b> The young man saith unto him, All these things have I kept from my youth up: what lack I yet? <b>21</b> Jesus said unto him, If thou wilt be perfect, go and sell that thou hast, and give to the poor, and thou shalt have treasure in heaven: and come and follow me. <b>22</b> But when the young man heard that saying, he went away sorrowful: for he had great possessions.",
+                    NKJV: "<b>16</b> Now behold, one came and said to Him, “Good Teacher, what good thing shall I do that I may have eternal life?” <b>17</b> So He said to him, “Why do you call Me good? No one is good but One, that is, God. But if you want to enter into life, keep the commandments.” <b>18</b> He said to Him, “Which ones?” Jesus said, “‘You shall not murder,’ ‘You shall not commit adultery,’ ‘You shall not steal,’ ‘You shall not bear false witness,’ <b>19</b> ‘Honor your father and your mother,’ and, ‘You shall love your neighbor as yourself.’” <b>20</b> The young man said to Him, “All these things I have kept from my youth. What do I still lack?” <b>21</b> Jesus said to him, “If you want to be perfect, go, sell what you have and give to the poor, and you will have treasure in heaven; and come, follow Me.” <b>22</b> But when the young man heard that saying, he went away sorrowful, for he had great possessions.",
+                    NIV: "<b>16</b> Just then a man came up to Jesus and asked, “Teacher, what good thing must I do to get eternal life?” <b>17</b> “Why do you ask me about what is good?” Jesus replied. “There is only One who is good. If you want to enter life, keep the commandments.” <b>18</b> “Which ones?” he inquired. Jesus replied, “‘You shall not murder, you shall not commit adultery, you shall not steal, you shall not give false testimony, <b>19</b> honor your father and mother,’ and ‘love your neighbor as yourself.’” <b>20</b> “All these I have kept,” the young man said. “What do I still lack?” <b>21</b> Jesus answered, “If you want to be perfect, go, sell your possessions and give to the poor, and you will have treasure in heaven. Then come, follow me.” <b>22</b> When the young man heard this, he went away sad, because he had great wealth.",
+                    ESV: "<b>16</b> And behold, a man came up to him, saying, “Teacher, what good deed must I do to have eternal life?” <b>17</b> And he said to him, “Why do you ask me about what is good? There is only one who is good. If you would enter life, keep the commandments.” <b>18</b> He said to him, “Which ones?” And Jesus said, “You shall not murder, You shall not commit adultery, You shall not steal, You shall not bear false witness, <b>19</b> Honor your father and mother, and, You shall love your neighbor as yourself.” <b>20</b> The young man said to him, “All these I have kept. What do I still lack?” <b>21</b> Jesus said to him, “If you would be perfect, go, sell what you possess and give to the poor, and you will have treasure in heaven; and come, follow me.” <b>22</b> When the young man heard this he went away sorrowful, for he had great possessions.",
+                    AMP: "<b>16</b> And someone came to Him and said, “Teacher, what essentially good thing shall I do to obtain eternal life [that is, eternal salvation in the Messiah’s kingdom]?” <b>17</b> Jesus answered, “Why are you asking Me about what is [essentially] good? There is only One who is [essentially] good. But if you wish to enter into eternal life, keep the commandments.” <b>18</b> He said to Jesus, “Which commandments?” And Jesus answered, “You shall not commit murder; You shall not commit adultery; You shall not steal; You shall not give false testimony; <b>19</b> Honor your father and mother; and You shall love your neighbor as yourself [that is, unselfishly seek the best or higher good for others].” <b>20</b> The young man said to Him, “I have kept all these things [from my youth]; what do I still lack?” <b>21</b> Jesus answered him, “If you wish to be perfect [that is, have the spiritual maturity that accompanies godly character with no moral or ethical deficiencies], go and sell what you have and give the money to the poor, and you will have treasure in heaven; and come, follow Me [becoming My disciple, believing and trusting in Me and walking the same path of life that I walk].” <b>22</b> But when the young man heard this, he left grieving and distressed; for he owned much property and had many possessions [which he treasured more than his relationship with God].",
+                    NLT: "<b>16</b> Someone came to Jesus with this question: “Teacher, what good deed must I do to have eternal life?” <b>17</b> “Why ask me about what is good?” Jesus replied. “There is only One who is good. But to answer your question—if you want to receive eternal life, keep the commandments.” <b>18</b> “Which ones?” the man asked. And Jesus replied: “You must not murder. You must not commit adultery. You must not steal. You must not testify falsely. <b>19</b> Honor your father and mother. Love your neighbor as yourself.” <b>20</b> “I’ve obeyed all these commandments,” the young man replied. “What else must I do?” <b>21</b> Jesus told him, “If you want to be perfect, go and sell all your possessions and give the money to the poor, and you will have treasure in heaven. Then come, follow me.” <b>22</b> But when the young man heard this, he went away sad, for he had many possessions."
+                },
+
+                "Matthew 5:20": {
+                    KJV: "<b>20</b> For I say unto you, That except your righteousness shall exceed the righteousness of the scribes and Pharisees, ye shall in no case enter into the kingdom of heaven.",
+                    NKJV: "<b>20</b> For I say to you, that unless your righteousness exceeds the righteousness of the scribes and Pharisees, you will by no means enter the kingdom of heaven.",
+                    NIV: "<b>20</b> For I tell you that unless your righteousness surpasses that of the Pharisees and the teachers of the law, you will certainly not enter the kingdom of heaven.",
+                    ESV: "<b>20</b> For I tell you, unless your righteousness exceeds that of the scribes and Pharisees, you will never enter the kingdom of heaven.",
+                    AMP: "<b>20</b> For I say to you that unless your righteousness (uprightness, moral essence) is more than that of the scribes and Pharisees, you will never enter the kingdom of heaven.",
+                    NLT: "<b>20</b> But I warn you—unless your righteousness is better than the righteousness of the teachers of religious law and the Pharisees, you will never enter the Kingdom of Heaven!"
+                },
+
+                "James 2:10-11": {
+                    KJV: "<b>10</b> For whosoever shall keep the whole law, and yet offend in one point, he is guilty of all. <b>11</b> For he that said, Do not commit adultery, said also, Do not kill. Now if thou commit no adultery, yet if thou kill, thou art become a transgressor of the law.",
+                    NKJV: "<b>10</b> For whoever shall keep the whole law, and yet stumble in one point, he is guilty of all. <b>11</b> For He who said, “Do not commit adultery,” also said, “Do not murder.” Now if you do not commit adultery, but you do murder, you have become a transgressor of the law.",
+                    NIV: "<b>10</b> For whoever keeps the whole law and yet stumbles at just one point is guilty of breaking all of it. <b>11</b> For he who said, “You shall not commit adultery,” also said, “You shall not murder.” If you do not commit adultery but do commit murder, you have become a lawbreaker.",
+                    ESV: "<b>10</b> For whoever keeps the whole law but fails in one point has become guilty of all of it. <b>11</b> For he who said, “Do not commit adultery,” also said, “Do not murder.” If you do not commit adultery but do murder, you have become a transgressor of the law.",
+                    AMP: "<b>10</b> For whoever keeps the whole law but stumbles in one point, he has become guilty of [breaking] all of it. <b>11</b> For He who said, “Do not commit adultery,” also said, “Do not murder.” Now if you do not commit adultery, but you murder, you have become guilty of transgressing the [entire] law.",
+                    NLT: "<b>10</b> For the person who keeps all of the laws except one is as guilty as a person who has broken all of God’s laws. <b>11</b> For the same God who said, “You must not commit adultery,” also said, “You must not murder.” So if you murder someone but do not commit adultery, you have still broken the law."
+                },
+
+                "Matthew 15:8": {
+                    KJV: "<b>8</b> This people draweth nigh unto me with their mouth, and honoureth me with their lips; but their heart is far from me.",
+                    NKJV: "<b>8</b> ‘These people draw near to Me with their mouth, And honor Me with their lips, But their heart is far from Me.",
+                    NIV: "<b>8</b> “‘These people honor me with their lips, but their hearts are far from me.",
+                    ESV: "<b>8</b> “‘This people honors me with their lips, but their heart is far from me;",
+                    AMP: "<b>8</b> ‘This people honors Me with their lips, But their heart is far away from Me.",
+                    NLT: "<b>8</b> ‘These people honor me with their lips, but their hearts are far from me."
+                },
+                "Matthew 19:16": {
+                    KJV: "<b>16</b> And, behold, one came and said unto him, Good Master, what good thing shall I do, that I may have eternal life?",
+                    NKJV: "<b>16</b> Now behold, one came and said to Him, “Good Teacher, what good thing shall I do that I may have eternal life?”",
+                    NIV: "<b>16</b> Just then a man came up to Jesus and asked, “Teacher, what good thing must I do to get eternal life?”",
+                    ESV: "<b>16</b> And behold, a man came up to him, saying, “Teacher, what good deed must I do to have eternal life?”",
+                    AMP: "<b>16</b> And someone came to Him and said, “Teacher, what essentially good thing shall I do to obtain eternal life [that is, eternal salvation in the Messiah’s kingdom]?”",
+                    NLT: "<b>16</b> Someone came to Jesus with this question: “Teacher, what good deed must I do to have eternal life?”"
+                },
+                "Matthew 19:17": {
+                    KJV: "And he said unto him, Why callest thou me good? there is none good but one, that is, God: but if thou wilt enter into life, keep the commandments.",
+                    NKJV: "So He said to him, “Why do you call Me good? No one is good but One, that is, God. But if you want to enter into life, keep the commandments.”",
+                    NIV: "“Why do you ask me about what is good?” Jesus replied. “There is only One who is good. If you want to enter life, keep the commandments.”",
+                    ESV: "And he said to him, “Why do you ask me about what is good? There is only one who is good. If you would enter life, keep the commandments.”",
+                    AMP: "Jesus answered, “Why are you asking Me about what is [essentially] good? There is only One who is [essentially] good. But if you wish to enter into eternal life, keep the commandments.”",
+                    NLT: "“Why ask me about what is good?” Jesus replied. “There is only One who is good. But to answer your question—if you want to receive eternal life, keep the commandments.”"
+                },
+                "Matthew 19:18-21": {
+                    KJV: "<b>18</b> He saith unto him, Which? Jesus said, Thou shalt do no murder, Thou shalt not commit adultery, Thou shalt not steal, Thou shalt not bear false witness, <b>19</b> Honour thy father and thy mother: and, Thou shalt love thy neighbour as thyself. <b>20</b> The young man saith unto him, All these things have I kept from my youth up: what lack I yet? <b>21</b> Jesus said unto him, If thou wilt be perfect, go and sell that thou hast, and give to the poor, and thou shalt have treasure in heaven: and come and follow me.",
+                    NKJV: "<b>18</b> He said to Him, “Which ones?” Jesus said, “‘You shall not murder,’ ‘You shall not commit adultery,’ ‘You shall not steal,’ ‘You shall not bear false witness,’ <b>19</b> ‘Honor your father and your mother,’ and, ‘You shall love your neighbor as yourself.’” <b>20</b> The young man said to Him, “All these things I have kept from my youth. What do I still lack?” <b>21</b> Jesus said to him, “If you want to be perfect, go, sell what you have and give to the poor, and you will have treasure in heaven; and come, follow Me.”",
+                    NIV: "<b>18</b> “Which ones?” he inquired. Jesus replied, “‘You shall not murder, you shall not commit adultery, you shall not steal, you shall not give false testimony, <b>19</b> honor your father and mother,’ and ‘love your neighbor as yourself.’” <b>20</b> “All these I have kept,” the young man said. “What do I still lack?” <b>21</b> Jesus answered, “If you want to be perfect, go, sell your possessions and give to the poor, and you will have treasure in heaven. Then come, follow me.”",
+                    ESV: "<b>18</b> He said to him, “Which ones?” And Jesus said, “You shall not murder, You shall not commit adultery, You shall not steal, You shall not bear false witness, <b>19</b> Honor your father and mother, and, You shall love your neighbor as yourself.” <b>20</b> The young man said to him, “All these I have kept. What do I still lack?” <b>21</b> Jesus said to him, “If you would be perfect, go, sell what you possess and give to the poor, and you will have treasure in heaven; and come, follow me.”",
+                    AMP: "<b>18</b> He said to Jesus, “Which commandments?” And Jesus answered, “You shall not commit murder; You shall not commit adultery; You shall not steal; You shall not give false testimony; <b>19</b> Honor your father and mother; and You shall love your neighbor as yourself [that is, unselfishly seek the best or higher good for others].” <b>20</b> The young man said to Him, “I have kept all these things [from my youth]; what do I still lack?” <b>21</b> Jesus answered him, “If you wish to be perfect [that is, have the spiritual maturity that accompanies godly character with no moral or ethical deficiencies], go and sell what you have and give the money to the poor, and you will have treasure in heaven; and come, follow Me [becoming My disciple, believing and trusting in Me and walking the same path of life that I walk].”",
+                    NLT: "<b>18</b> “Which ones?” the man asked. And Jesus replied: “You must not murder. You must not commit adultery. You must not steal. You must not testify falsely. <b>19</b> Honor your father and mother. Love your neighbor as yourself.” <b>20</b> “I’ve obeyed all these commandments,” the young man replied. “What else must I do?” <b>21</b> Jesus told him, “If you want to be perfect, go and sell all your possessions and give the money to the poor, and you will have treasure in heaven. Then come, follow me.”"
+                },
+
+                "James 2:10-11": {
+                    KJV: "<b>10</b> For whosoever shall keep the whole law, and yet offend in one point, he is guilty of all. <b>11</b> For he that said, Do not commit adultery, said also, Do not kill. Now if thou commit no adultery, yet if thou kill, thou art become a transgressor of the law.",
+                    NKJV: "<b>10</b> For whoever shall keep the whole law, and yet stumble in one point, he is guilty of all. <b>11</b> For He who said, “Do not commit adultery,” also said, “Do not murder.” Now if you do not commit adultery, but you do murder, you have become a transgressor of the law.",
+                    NIV: "<b>10</b> For whoever keeps the whole law and yet stumbles at just one point is guilty of breaking all of it. <b>11</b> For he who said, “You shall not commit adultery,” also said, “You shall not murder.” If you do not commit adultery but do commit murder, you have become a lawbreaker.",
+                    ESV: "<b>10</b> For whoever keeps the whole law but fails in one point has become guilty of all of it. <b>11</b> For he who said, “Do not commit adultery,” also said, “Do not murder.” If you do not commit adultery but do murder, you have become a transgressor of the law.",
+                    AMP: "<b>10</b> For whoever keeps the whole Law but stumbles in one point, he has become guilty of [breaking] all of it. <b>11</b> For He who said, “Do not commit adultery,” also said, “Do not murder.” Now if you do not commit adultery, but you murder, you have become guilty of transgressing the [entire] Law.",
+                    NLT: "<b>10</b> For the person who keeps all of the laws except one is as guilty as a person who has broken all of God’s laws. <b>11</b> For the same God who said, “You must not commit adultery,” also said, “You must not murder.” So if you murder someone but do not commit adultery, you have still broken the law."
+                },
+
+                "Matthew 19:22": {
+                    "KJV": "<b>22</b> But when the young man heard that saying, he went away sorrowful: for he had great possessions.",
+                    "NKJV": "<b>22</b> But when the young man heard that saying, he went away sorrowful, for he had great possessions.",
+                    "NIV": "<b>22</b> When the young man heard this, he went away sad, because he had great wealth.",
+                    "ESV": "<b>22</b> When the young man heard this he went away sorrowful, for he had great possessions.",
+                    "AMP": "<b>22</b> But when the young man heard this, he left grieving and distressed; for he owned much property and had many possessions [which he treasured more than his relationship with God].",
+                    "NLT": "<b>22</b> But when the young man heard this, he went away sad, for he had many possessions."
+                },
+                "Matthew 19:21": {
+                    "KJV": "<b>21</b> Jesus said unto him, If thou wilt be perfect, go and sell that thou hast, and give to the poor, and thou shalt have treasure in heaven: and come and follow me.",
+                    "NKJV": "<b>21</b> Jesus said to him, “If you want to be perfect, go, sell what you have and give to the poor, and you will have treasure in heaven; and come, follow Me.”",
+                    "NIV": "<b>21</b> Jesus answered, “If you want to be perfect, go, sell your possessions and give to the poor, and you will have treasure in heaven. Then come, follow me.”",
+                    "ESV": "<b>21</b> Jesus said to him, “If you would be perfect, go, sell what you possess and give to the poor, and you will have treasure in heaven; and come, follow me.”",
+                    "AMP": "<b>21</b> Jesus answered him, “If you wish to be perfect [that is, have the spiritual maturity that accompanies godly character with no moral or ethical deficiencies], go and sell what you have and give [the money] to the poor, and you will have treasure in heaven; and come, follow Me [be My disciple, believing and trusting in Me and walking the same path of life that I walk].”",
+                    "NLT": "<b>21</b> Jesus told him, “If you want to be perfect, go and sell all your possessions and give the money to the poor, and you will have treasure in heaven. Then come, follow me.”"
+                },
+
+                "Matthew 19:28-29": {
+                    "KJV": "<b>28</b> And Jesus said unto them, Verily I say unto you, That ye which have followed me, in the regeneration when the Son of man shall sit in the throne of his glory, ye also shall sit upon twelve thrones, judging the twelve tribes of Israel. <b>29</b> And every one that hath forsaken houses, or brethren, or sisters, or father, or mother, or wife, or children, or lands, for my name's sake, shall receive an hundredfold, and shall inherit everlasting life.",
+                    "NKJV": "<b>28</b> So Jesus said to them, “Assuredly I say to you, that in the regeneration, when the Son of Man sits on the throne of His glory, you who have followed Me will also sit on twelve thrones, judging the twelve tribes of Israel. <b>29</b> And everyone who has left houses or brothers or sisters or father or mother or wife or children or lands, for My name’s sake, shall receive a hundredfold, and inherit eternal life.”",
+                    "NIV": "<b>28</b> Jesus said to them, “Truly I tell you, at the renewal of all things, when the Son of Man sits on his glorious throne, you who have followed me will also sit on twelve thrones, judging the twelve tribes of Israel. <b>29</b> And everyone who has left houses or brothers or sisters or father or mother or wife or children or fields for my sake will receive a hundred times as much and will inherit eternal life.",
+                    "ESV": "<b>28</b> Jesus said to them, “Truly, I say to you, in the new world, when the Son of Man will sit on his glorious throne, you who have followed me will also sit on twelve thrones, judging the twelve tribes of Israel. <b>29</b> And everyone who has left houses or brothers or sisters or father or mother or children or lands, for my name’s sake, will receive a hundredfold and will inherit eternal life.”",
+                    "AMP": "<b>28</b> Jesus said to them, “I assure you and most solemnly say to you, in the renewal [that is, the Messianic restoration and regeneration of all things] when the Son of Man sits on His glorious throne, you [who have followed Me, becoming My disciples] will also sit on twelve thrones, judging the twelve tribes of Israel. <b>29</b> And everyone who has left houses or brothers or sisters or father or mother or children or farms for My name’s sake, will receive many times as much, and will inherit eternal life.",
+                    "NLT": "<b>28</b> Jesus replied, “I assure you that when the world is made new and the Son of Man sits upon his glorious throne, you who have been my followers will also sit on twelve thrones, judging the twelve tribes of Israel. <b>29</b> And everyone who has given up houses or brothers or sisters or father or mother or children or property, for my sake, will receive a hundred times as much in return and will inherit eternal life.”"
+                },
+                "Ecclesiastes 11:1-3": {
+                    "KJV": "<b>1</b> Cast thy bread upon the waters: for thou shalt find it after many days. <b>2</b> Give a portion to seven, and also to eight; for thou knowest not what evil shall be upon the earth. <b>3</b> If the clouds be full of rain, they empty themselves upon the earth: and if the tree fall toward the south, or toward the north, in the place where the tree falleth, there it shall be.",
+                    "NKJV": "<b>1</b> Cast your bread upon the waters, For you will find it after many days. <b>2</b> Give a serving to seven, and also to eight, For you do not know what evil will be on the earth. <b>3</b> If the clouds are full of rain, They empty themselves upon the earth; And if a tree falls to the south or the north, In the place where the tree falls, there it shall lie.",
+                    "NIV": "<b>1</b> Ship your grain across the sea; after many days you may receive a return. <b>2</b> Invest in seven ventures, yes, in eight; you do not know what disaster may come upon the land. <b>3</b> If clouds are full of water, they pour rain on the earth. Whether a tree falls to the south or to the north, in the place where it falls, there it will lie.",
+                    "ESV": "<b>1</b> Cast your bread upon the waters, for you will find it after many days. <b>2</b> Give a portion to seven, or even to eight, for you know not what disaster may happen on earth. <b>3</b> If the clouds are full of rain, they empty themselves on the earth, and if a tree falls to the south or to the north, in the place where the tree falls, there it will lie.",
+                    "AMP": "<b>1</b> Cast your bread on the surface of the waters, [be diligently active, make thoughtful decisions], for you will find it after many days [be richly rewarded]. <b>2</b> Give a portion to seven, or even divide it to eight, for you do not know what misfortune may occur on the earth. <b>3</b> If the clouds are full [of rain], they empty themselves on the earth; and if a tree falls toward the south or toward the north, in the place where the tree falls, there it lies.",
+                    "NLT": "<b>1</b> Send your grain across the seas, and in time, profits will flow back to you. <b>2</b> But divide your investments among many places, for you do not know what risks might lie ahead. <b>3</b> When clouds are heavy, the rains come down. Whether a tree falls north or south, it stays where it falls."
+                },  
+
+
+
+
+
+            };
+
+            // Replace the existing showVersion function
+
+            function showVersion(version) {
+                const reference =
+                    document.getElementById("verse-reference").textContent;
+                const verseText = document.getElementById("verse-text");
+
+                // Show loader
+                verseText.innerHTML =
+                    '<div class="verse-loader"><i class="fas fa-spinner fa-2x"></i></div>';
+
+                // Simulate loading time and show verse
+                setTimeout(() => {
+                    if (bibleVerses[reference]) {
+                        verseText.innerHTML = `<p class="verse-text">${bibleVerses[reference][version]}</p>`;
+                        // Add show class after a brief delay to trigger fade-in
+                        setTimeout(() => {
+                            document
+                                .querySelector(".verse-text")
+                                .classList.add("show");
+                        }, 100);
+                    } else {
+                        verseText.innerHTML =
+                            "<p>Verse not found in database.</p>";
+                    }
+
+                    // Update active button
+                    document.querySelectorAll(".version-btn").forEach((btn) => {
+                        btn.classList.remove("active");
+                        if (btn.textContent === version)
+                            btn.classList.add("active");
+                    });
+                }, 500); // Half second loading time
+            }
+
+            // Close modal when clicking the X or outside
+            document.querySelector(".close").onclick = function () {
+                document.getElementById("verse-modal").style.display = "none";
+                document.body.classList.remove("modal-open");
+            };
+
+            window.onclick = function (event) {
+                const modal = document.getElementById("verse-modal");
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    document.body.classList.remove("modal-open");
+                }
+            };
+
+            function checkQuiz() {
+                const answers = {
+                    q1: "a", // Malachi 3:10
+                    q2: "b", // Time of Melchizedek and Abraham
+                    q3: "a", // No, it predates the Law of Moses
+                    q4: "c", // Christ
+                    q5: "a", // Hebrews 7:6-8
+                    q6: "a", // To support Melchizedek's priesthood
+                };
+
+                let score = 0;
+                let total = Object.keys(answers).length;
+                let resultsHTML = "<h3>📊 Quiz Results</h3><ul>";
+
+                for (let key in answers) {
+                    const selected = document.querySelector(
+                        `input[name="${key}"]:checked`
+                    );
+                    if (selected) {
+                        if (selected.value === answers[key]) {
+                            score++;
+                            resultsHTML += `<li>Question ${key.slice(
+                                1
+                            )}: ✅ Correct</li>`;
+                        } else {
+                            resultsHTML += `<li>Question ${key.slice(
+                                1
+                            )}: ❌ Incorrect</li>`;
+                        }
+                    } else {
+                        resultsHTML += `<li>Question ${key.slice(
+                            1
+                        )}: ⚠️ Not answered</li>`;
+                    }
+                }
+
+                resultsHTML += `</ul>`;
+
+                // Calculate percentage and add appropriate styling
+                const percentage = Math.round((score / total) * 100);
+                let scoreClass = "";
+                let message = "";
+
+                if (percentage >= 80) {
+                    scoreClass = "score-excellent";
+                    message =
+                        "🎉 Excellent work! You have a strong understanding of biblical tithing.";
+                } else if (percentage >= 60) {
+                    scoreClass = "score-good";
+                    message =
+                        "👍 Good job! You have a solid foundation, but consider reviewing some concepts.";
+                } else {
+                    scoreClass = "score-needs-improvement";
+                    message =
+                        "📚 Keep studying! Review the lesson materials to strengthen your understanding.";
+                }
+
+                resultsHTML += `<div class="score-summary ${scoreClass}">
+                            <strong>Your Score: ${score} out of ${total} (${percentage}%)</strong>
+                            <br><br>${message}
+                        </div>`;
+
+                const resultsDiv = document.getElementById("quiz-results");
+                resultsDiv.innerHTML = resultsHTML;
+                resultsDiv.classList.add("show");
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }
+
+            let progress = 0;
+            const totalSections = 5; // Number of tabs
+
+            function updateProgress(increment = true) {
+                if (increment) {
+                    progress = Math.min(100, progress + 100 / totalSections);
+                }
+                const progressBar = document.querySelector(".progress");
+                const progressText = document.querySelector(".progress-text");
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${Math.round(progress)}% Complete`;
+
+                if (progress >= 100) {
+                    showToast(
+                        "Congratulations! You've completed the lesson! 🎉"
+                    );
+                }
+            }
+
+            function showToast(message) {
+                const toast = document.createElement("div");
+                toast.className = "toast";
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                // Trigger reflow
+                toast.offsetHeight;
+
+                // Show toast
+                toast.style.opacity = "1";
+
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    toast.style.opacity = "0";
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            // Add interaction tracking to tab switching
+            const originalOpenTab = openTab;
+            openTab = function (tabName) {
+                originalOpenTab(tabName);
+                updateProgress();
+
+                // Add animation to questions
+                if (tabName === "quiz") {
+                    document.querySelectorAll(".question").forEach((q, i) => {
+                        setTimeout(() => q.classList.add("show"), i * 200);
+                    });
+                }
+            };
+
+            // Save progress to localStorage
+            function saveProgress() {
+                localStorage.setItem("lessonProgress", progress);
+                showToast("Progress saved! 💾");
+            }
+
+            // Load saved progress
+            window.addEventListener("load", () => {
+                const savedProgress = localStorage.getItem("lessonProgress");
+                if (savedProgress) {
+                    progress = parseFloat(savedProgress);
+                    updateProgress(false);
+                }
+            });
+
+            // Share functionality
+            function shareLesson() {
+                if (navigator.share) {
+                    navigator
+                        .share({
+                            title: "Sunday School Lesson",
+                            text: "Check out this lesson on Real Christian Clothing!",
+                            url: window.location.href,
+                        })
+                        .then(() => showToast("Shared successfully! 🙌"))
+                        .catch(() => showToast("Sharing failed"));
+                } else {
+                    showToast("Sharing not supported on this device");
+                }
+            }
+
+            // Scroll to top
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+            }
+
+            // Add to your existing JavaScript
+
+            let preferredVersion =
+                localStorage.getItem("preferredVersion") || "KJV";
+
+            function changeDefaultVersion(version) {
+                preferredVersion = version;
+                localStorage.setItem("preferredVersion", version);
+                showVersion(version);
+                showToast(`Default Bible version changed to ${version}`);
+            }
+
+            // Update the showBibleVersions function
+
+            // Load preferred version on startup
+            window.addEventListener("load", () => {
+                const savedVersion = localStorage.getItem("preferredVersion");
+                if (savedVersion) {
+                    preferredVersion = savedVersion;
+                    document.querySelectorAll(".version-btn").forEach((btn) => {
+                        btn.classList.remove("active");
+                        if (btn.textContent === preferredVersion)
+                            btn.classList.add("active");
+                    });
+                }
+            });
+
+            // Add this to your existing <script> section
+            let currentFontSize =
+                parseInt(localStorage.getItem("preferredFontSize")) || 16;
+
+            function adjustFontSize(delta) {
+                // Adjust font size with limits
+                currentFontSize = Math.min(
+                    Math.max(currentFontSize + delta, 12),
+                    24
+                );
+
+                // Update CSS variable
+                document.documentElement.style.setProperty(
+                    "--font-size",
+                    `${currentFontSize}px`
+                );
+
+                // Update display
+                document.querySelector(
+                    ".font-size"
+                ).textContent = `${currentFontSize}px`;
+
+                // Save to localStorage
+                localStorage.setItem("preferredFontSize", currentFontSize);
+            }
+
+            // Initialize font size on page load
+            window.addEventListener("load", () => {
+                // Set initial font size
+                document.documentElement.style.setProperty(
+                    "--font-size",
+                    `${currentFontSize}px`
+                );
+                document.querySelector(
+                    ".font-size"
+                ).textContent = `${currentFontSize}px`;
+
+                // Add scalable-text class to all text elements
+                document
+                    .querySelectorAll(
+                        "p, h1, h2, h3, h4, h5, h6, li, blockquote, label, button, input, textarea, .tab-btn, .verse-text, .options label"
+                    )
+                    .forEach((el) => el.classList.add("scalable-text"));
+            });
+
+            function changeFont(fontFamily) {
+                document.body.style.fontFamily = fontFamily;
+                // Save preference
+                localStorage.setItem("preferredFont", fontFamily);
+            }
+
+            // Load saved preferences
+            window.addEventListener("load", () => {
+                const savedFontSize = localStorage.getItem("preferredFontSize");
+                if (savedFontSize) {
+                    currentFontSize = parseInt(savedFontSize);
+                    adjustFontSize(0);
+                }
+
+                const savedFont = localStorage.getItem("preferredFont");
+                if (savedFont) {
+                    document.body.style.fontFamily = savedFont;
+                    document.querySelector(".font-family-select").value =
+                        savedFont;
+                }
+            });
+
+            // Add CSS Variable for scaling
+            document.documentElement.style.setProperty(
+                "--content-scale",
+                "100%"
+            );
+
+            // Update content elements to use the scale
+            document
+                .querySelectorAll(
+                    ".tab-content, .memory-verse, .reflection-notes"
+                )
+                .forEach((el) => {
+                    el.classList.add("adjustable-content");
+                    el.style.fontSize =
+                        "calc(1rem * var(--content-scale) / 100)";
+                });
+
+            // Add to your existing <script> section
+            document.addEventListener("DOMContentLoaded", () => {
+                // Love Meter functionality
+                const loveSlider = document.querySelector(".love-slider");
+                const ratingValue = document.querySelector(".rating-value");
+                const ratingFeedback =
+                    document.querySelector(".rating-feedback");
+
+                if (loveSlider) {
+                    loveSlider.addEventListener("input", () => {
+                        const value = loveSlider.value;
+                        ratingValue.textContent = `${value}/10`;
+
+                        // Update feedback based on rating
+                        const feedback =
+                            value >= 8
+                                ? "Excellent! Keep showing God's love!"
+                                : value >= 6
+                                ? "Good effort! There's room to grow."
+                                : "Consider ways to show more love tomorrow.";
+                        ratingFeedback.textContent = feedback;
+                    });
+                }
+
+                // Action Items functionality
+                const addActionBtn = document.querySelector(".add-action-btn");
+                if (addActionBtn) {
+                    addActionBtn.addEventListener("click", () => {
+                        const action = prompt("Enter your custom love action:");
+                        if (action) {
+                            const actionItems =
+                                document.querySelector(".action-items");
+                            const newAction = document.createElement("div");
+                            newAction.className = "action-item";
+                            newAction.innerHTML = `
+                                                                                <input type="checkbox" id="action${Date.now()}">
+                                                                                <label for="action${Date.now()}">${action}</label>
+                                                                            `;
+                            actionItems.insertBefore(newAction, addActionBtn);
+                        }
+                    });
+                }
+
+                // Journal Prompts functionality
+                const prompts = [
+                    "How did you demonstrate God's love today?",
+                    "What challenges did you face in showing love?",
+                    "How can you better express God's love tomorrow?",
+                ];
+                let currentPrompt = 0;
+
+                const updatePrompt = () => {
+                    const promptElement = document.querySelector(".prompt p");
+                    const promptCounter =
+                        document.querySelector(".prompt-counter");
+                    if (promptElement) {
+                        promptElement.textContent = prompts[currentPrompt];
+                        promptCounter.textContent = `${currentPrompt + 1}/${
+                            prompts.length
+                        }`;
+                    }
+                };
+
+                const nextPromptBtn = document.querySelector(".next-prompt");
+                const prevPromptBtn = document.querySelector(".prev-prompt");
+
+                if (nextPromptBtn && prevPromptBtn) {
+                    nextPromptBtn.addEventListener("click", () => {
+                        if (currentPrompt < prompts.length - 1) {
+                            currentPrompt++;
+                            updatePrompt();
+                            prevPromptBtn.disabled = false;
+                            if (currentPrompt === prompts.length - 1) {
+                                nextPromptBtn.disabled = true;
+                            }
+                        }
+                    });
+
+                    prevPromptBtn.addEventListener("click", () => {
+                        if (currentPrompt > 0) {
+                            currentPrompt--;
+                            updatePrompt();
+                            nextPromptBtn.disabled = false;
+                            if (currentPrompt === 0) {
+                                prevPromptBtn.disabled = true;
+                            }
+                        }
+                    });
+                }
+
+                // Commitment functionality
+                const saveCommitmentBtn =
+                    document.querySelector(".save-commitment");
+                const commitmentInput =
+                    document.querySelector(".commitment-input");
+                const commitmentList =
+                    document.querySelector(".commitment-list");
+
+                if (saveCommitmentBtn && commitmentInput && commitmentList) {
+                    // Load saved commitments
+                    const savedCommitments = JSON.parse(
+                        localStorage.getItem("commitments") || "[]"
+                    );
+                    savedCommitments.forEach((commitment) => {
+                        const li = document.createElement("li");
+                        li.textContent = commitment;
+                        commitmentList.appendChild(li);
+                    });
+
+                    saveCommitmentBtn.addEventListener("click", () => {
+                        const commitment = commitmentInput.value.trim();
+                        if (commitment) {
+                            const li = document.createElement("li");
+                            li.textContent = commitment;
+                            commitmentList.appendChild(li);
+
+                            // Save to localStorage
+                            const commitments = JSON.parse(
+                                localStorage.getItem("commitments") || "[]"
+                            );
+                            commitments.push(commitment);
+                            localStorage.setItem(
+                                "commitments",
+                                JSON.stringify(commitments)
+                            );
+
+                            commitmentInput.value = "";
+                            showToast("Commitment saved! 🙏");
+                        }
+                    });
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const trigger = document.getElementById("fruitTrigger");
+                const audio = document.getElementById("fruitSound");
+
+                let hasPlayed = sessionStorage.getItem("fruitSoundPlayed");
+
+                trigger.addEventListener("click", function () {
+                    // Animate
+                    trigger.classList.add("bounce");
+                    setTimeout(() => trigger.classList.remove("bounce"), 300);
+
+                    // Play sound only once per session
+                    if (!hasPlayed && audio) {
+                        audio.currentTime = 0;
+                        audio.play();
+                        sessionStorage.setItem("fruitSoundPlayed", "true");
+                        hasPlayed = true;
+                    }
+                });
+            });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
