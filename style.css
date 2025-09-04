@@ -549,7 +549,7 @@ h3 {
     overflow-y: auto;
     backdrop-filter: var(--backdrop-filter);
     box-shadow: var(--glass-shadow);
-    animation: slideIn 0.4s ease;
+/*     animation: slideIn 0.4s ease */
 }
 
 .close {
@@ -1623,3 +1623,4 @@ h3 {
         animation: none !important;
     }
 }
+
