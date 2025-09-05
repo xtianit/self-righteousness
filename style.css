@@ -507,9 +507,10 @@ h3 {
     .modal-content {
         margin: 5% auto;
         padding: 1rem;
-        width: 98%;
+        width: 90%;
         max-height: 85vh;
         border-radius: 15px;
+        
         top: 50px;
     }
 
@@ -1066,4 +1067,5 @@ h3 {
         box-shadow: 0 8px 25px rgba(91, 127, 191, 0.6);
     }
 }
+
 
