@@ -1,4 +1,3 @@
-
 /* Enhanced CSS Custom Properties for Dark Default Theme */
 :root {
     --primary-color: #5b7fbf;
@@ -511,6 +510,7 @@ h3 {
         width: 98%;
         max-height: 85vh;
         border-radius: 15px;
+        top: 20px;
     }
 
     .modal-content h2 {
