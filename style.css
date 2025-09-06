@@ -12,6 +12,11 @@
     --content-scale: 100%;
     --gradient-primary: linear-gradient(135deg, #5b7fbf, #4a6da7);
     --gradient-secondary: linear-gradient(135deg, #16213e, #2a3b5c);
+    /* Button colors for dark mode */
+    --verse-btn-bg: rgba(255, 255, 255, 0.2);
+    --verse-btn-border: rgba(255, 255, 255, 0.4);
+    --verse-btn-text: white;
+    --verse-btn-hover-bg: rgba(255, 255, 255, 0.3);
 }
 
 /* Light Mode Variables (toggled state) */
@@ -23,6 +28,11 @@ body.light-mode {
     --secondary-color: #f8f9fa;
     --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     --gradient-secondary: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    /* Button colors for light mode */
+    --verse-btn-bg: rgba(91, 127, 191, 0.1);
+    --verse-btn-border: rgba(91, 127, 191, 0.6);
+    --verse-btn-text: #5b7fbf;
+    --verse-btn-hover-bg: rgba(91, 127, 191, 0.2);
 }
 
 /* Base Styles with Enhanced Dark Theme */
@@ -140,7 +150,6 @@ body {
     border-radius: 50%;
     box-shadow: var(--shadow);
     transition: var(--transition);
-    /* animation: logoRotate 6s linear infinite; */
     filter: brightness(1.1);
 }
 
@@ -267,8 +276,6 @@ h3 {
     box-shadow: var(--shadow);
     backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
-
-    /* Mobile: Horizontal scrolling */
     overflow-x: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
@@ -408,23 +415,24 @@ h3 {
     line-height: 1.8;
 }
 
-/* Enhanced Verse Buttons */
+/* FIXED Enhanced Verse Buttons - Now visible in both light and dark modes */
 .verse-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    color: white;
+    background: var(--verse-btn-bg);
+    border: 2px solid var(--verse-btn-border);
+    color: var(--verse-btn-text);
     padding: 10px 20px;
     border-radius: 25px;
     margin: 8px;
     transition: var(--transition);
     backdrop-filter: blur(10px);
     font-weight: 500;
+    cursor: pointer;
 }
 
 .verse-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: var(--verse-btn-hover-bg);
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(91, 127, 191, 0.3);
 }
 
 /* Enhanced Aims and Objectives */
@@ -502,24 +510,6 @@ h3 {
     border: 1px solid var(--border-color);
 }
 
-/* Mobile-specific modal adjustments */
-@media (max-width: 768px) {
-    .modal-content {
-        margin: 5% auto;
-        padding: 1rem;
-        width: 90%;
-        max-height: 85vh;
-        border-radius: 15px;
-
-        top: 50px;
-    }
-
-    .modal-content h2 {
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
-    }
-}
-
 .close {
     position: absolute;
     top: 15px;
@@ -538,23 +528,15 @@ h3 {
 }
 
 /* Enhanced Version Tabs - Mobile Responsive */
-/* .version-tab {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 1.5rem 0;
-  justify-content: center;
-} */
-
 .version-tab {
     display: flex;
-    flex-wrap: nowrap; /* keep items in one row */
+    flex-wrap: nowrap;
     gap: 10px;
     margin: 1.5rem 0;
-    justify-content: flex-start; /* don’t center when scrolling */
-    overflow-x: auto; /* horizontal scrolling */
-    min-height: 60px; /* ensures row is visible */
-    padding-bottom: 5px; /* small spacing for scrollbar */
+    justify-content: flex-start;
+    overflow-x: auto;
+    min-height: 60px;
+    padding-bottom: 5px;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) transparent;
 }
@@ -582,21 +564,8 @@ h3 {
     transition: var(--transition);
     font-weight: 600;
     backdrop-filter: blur(5px);
-    flex-shrink: 0; /* prevent shrinking so buttons keep full width */
+    flex-shrink: 0;
 }
-
-/* .version-btn {
-  padding: 12px 20px;
-  border: 2px solid var(--primary-color);
-  background: transparent;
-  color: var(--primary-color);
-  border-radius: 25px;
-  cursor: pointer;
-  transition: var(--transition);
-  font-weight: 600;
-  backdrop-filter: blur(5px);
-  flex-shrink: 0;
-} */
 
 .version-btn:hover {
     transform: translateY(-2px) scale(1.05);
@@ -782,36 +751,11 @@ h3 {
     box-shadow: 0 8px 20px rgba(91, 127, 191, 0.4);
 }
 
-/* Enhanced Font Controls */
-/* .font-controls {
-    position: fixed;
-    bottom: 20px;
-    right: -200px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--card-bg);
-    padding: 12px 18px;
-    border-radius: 30px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    display: none;
-} */
-
-/* Enhanced Font Controls */
-
-/* floating toggle button */
-
-/* Enhanced Mobile-Friendly Font Controls - Hidden by Default */
-/* Enhanced Font Controls - Hidden by Default with Swipe Functionality */
-
-/* Font Controls Panel - Starts Hidden */
+/* Font Controls Panel - Starts hidden */
 .font-controls {
     position: fixed;
     bottom: 20px;
-    right: -340px; /* Start completely hidden - increased width to ensure full hide */
+    right: -340px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -828,19 +772,16 @@ h3 {
     overflow: hidden;
 }
 
-/* Show state - slides in from right */
 .font-controls.show {
     right: 0;
     animation: slideInFromRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hide animation */
 .font-controls.hide {
     right: -340px;
     animation: slideOutToRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Font Controls Header */
 .font-controls-header {
     display: flex;
     align-items: center;
@@ -872,7 +813,6 @@ h3 {
     transform: scale(1.1);
 }
 
-/* Font Size Controls Row */
 .font-size-row {
     display: flex;
     align-items: center;
@@ -959,7 +899,6 @@ h3 {
     background: var(--secondary-color);
 }
 
-/* Enhanced Toggle Button */
 .font-toggle-btn {
     position: fixed;
     bottom: 25px;
@@ -981,14 +920,12 @@ h3 {
     overflow: hidden;
 }
 
-/* Toggle Button Active State */
 .font-toggle-btn.active {
     background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
     box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
     transform: scale(1.1);
 }
 
-/* Button Ripple Effect */
 .font-toggle-btn::before {
     content: "";
     position: absolute;
@@ -1028,7 +965,6 @@ h3 {
     transform: rotate(180deg);
 }
 
-/* Swipe Indicator Styling */
 .swipe-indicator {
     position: fixed;
     bottom: 100px;
@@ -1066,7 +1002,6 @@ h3 {
     transform: translateY(-50%);
 }
 
-/* Swipe Edge Indicator */
 .swipe-edge-indicator {
     position: fixed;
     top: 50%;
@@ -1103,7 +1038,6 @@ h3 {
     border-radius: 6px 0 0 6px;
 }
 
-/* Tutorial Message Styling */
 .swipe-tutorial {
     position: fixed;
     bottom: 120px;
@@ -1123,6 +1057,60 @@ h3 {
 
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        margin-top: 80px;
+    }
+
+    .tab-content {
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .memory-verse {
+        padding: 2rem;
+        border-radius: 15px;
+    }
+
+    .interactive-cards {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .reflection-card {
+        padding: 1.5rem;
+    }
+
+    .theme-toggle {
+        width: 50px;
+        height: 50px;
+        top: 15px;
+        right: 15px;
+    }
+
+    .inner-logo-container {
+        top: 15px;
+    }
+
+    .logo {
+        width: 55px;
+        height: 55px;
+    }
+
+    .modal-content {
+        margin: 5% auto;
+        padding: 1rem;
+        width: 90%;
+        max-height: 85vh;
+        border-radius: 15px;
+        top: 50px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
     .font-controls {
         bottom: 15px;
         right: -300px;
@@ -1170,6 +1158,28 @@ h3 {
 }
 
 @media (max-width: 480px) {
+    .tabs {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .tab-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+
+    .tab-content {
+        padding: 1rem;
+    }
+
+    .memory-verse {
+        padding: 1.5rem;
+    }
+
+    .reflection-card {
+        padding: 1rem;
+    }
+
     .font-controls {
         right: -280px;
         min-width: 240px;
@@ -1213,7 +1223,6 @@ h3 {
     }
 }
 
-/* Pulse animation for edge indicator */
 @keyframes edgePulse {
     0% {
         opacity: 0.4;
@@ -1229,136 +1238,8 @@ h3 {
     }
 }
 
-/* Show edge pulse animation when hovering near edge */
 .swipe-edge-indicator.pulse {
     animation: edgePulse 1.5s infinite;
-}
-
-/* .font-controls button {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    color: white;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-}
-
-.font-controls button:hover {
-    transform: scale(1.15);
-    box-shadow: 0 4px 12px rgba(91, 127, 191, 0.4);
-}
-
-.font-size {
-    font-weight: bold;
-    color: var(--primary-color);
-    min-width: 50px;
-    text-align: center;
-    font-size: 0.95rem;
-}
-
-.font-family-select {
-    padding: 8px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    background: var(--bg-color);
-    color: var(--text-color);
-    font-size: 0.9rem;
-    outline: none;
-    transition: var(--transition);
-}
-
-.font-family-select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 8px rgba(91, 127, 191, 0.3);
-} */
-
-/* ENHANCED MOBILE RESPONSIVENESS */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-        margin-top: 80px;
-    }
-
-    .tab-content {
-        padding: 1.5rem;
-        border-radius: 15px;
-    }
-
-    .memory-verse {
-        padding: 2rem;
-        border-radius: 15px;
-    }
-
-    .interactive-cards {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .reflection-card {
-        padding: 1.5rem;
-    }
-
-    .font-controls button {
-        width: 35px;
-        height: 35px;
-    }
-
-    .font-size {
-        font-size: 0.85rem;
-        min-width: 45px;
-    }
-
-    .theme-toggle {
-        width: 50px;
-        height: 50px;
-        top: 15px;
-        right: 15px;
-    }
-
-    .inner-logo-container {
-        top: 15px;
-    }
-
-    .logo {
-        width: 55px;
-        height: 55px;
-    }
-}
-
-@media (max-width: 480px) {
-    .tabs {
-        padding: 12px;
-        gap: 8px;
-    }
-
-    .tab-btn {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-    }
-
-    .tab-content {
-        padding: 1rem;
-    }
-
-    .memory-verse {
-        padding: 1.5rem;
-    }
-
-    .reflection-card {
-        padding: 1rem;
-    }
-
-    .font-controls {
-        flex-direction: column;
-        gap: 8px;
-        padding: 8px;
-    }
 }
 
 /* Enhanced Animations */
