@@ -801,56 +801,246 @@ h3 {
 } */
 
 /* Enhanced Font Controls */
+
+/* floating toggle button */
+
+/* Enhanced Mobile-Friendly Font Controls - Hidden by Default */
 .font-controls {
     position: fixed;
     bottom: 20px;
-    right: -500px; /* Start fully hidden */
+    right: -320px; /* Start fully hidden */
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 15px;
     background: var(--card-bg);
-    padding: 12px 18px;
-    border-radius: 30px;
+    padding: 20px 25px;
+    border-radius: 25px 0 0 25px;
     box-shadow: var(--shadow);
     border: 1px solid var(--border-color);
     z-index: 1000;
-    backdrop-filter: blur(10px);
-    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(15px);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 280px;
 }
 
 .font-controls.show {
-    right: 500px; /* Slide in when show class is added */
+    right: 0; /* Slide in when show class is added */
 }
 
-/* floating toggle button */
-.font-toggle-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--primary-color);
-    color: #fff;
+/* Font Controls Header */
+.font-controls-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Font Size Controls Row */
+.font-size-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+}
+
+.font-controls button {
+    width: 45px;
+    height: 45px;
     border: none;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    background: var(--gradient-primary);
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    z-index: 1100; /* above panel */
-    transition: background 0.3s ease;
+    font-weight: 600;
+    font-size: 18px;
 }
 
-.font-toggle-btn:hover {
+.font-controls button:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(91, 127, 191, 0.4);
+}
+
+.font-size {
+    font-weight: bold;
+    color: var(--primary-color);
+    min-width: 60px;
+    text-align: center;
+    font-size: 16px;
     background: var(--secondary-color);
+    padding: 8px 12px;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
 }
 
+.font-family-select {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition);
+    width: 100%;
+}
 
+.font-family-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(91, 127, 191, 0.3);
+}
 
+/* Stunning Toggle Button */
+.font-toggle-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ecf0f1;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.3);
+    z-index: 1100;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+}
 
-.font-controls button {
+/* Toggle Button Active State */
+.font-toggle-btn.active {
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
+    transform: scale(1.1);
+}
+
+/* Button Ripple Effect */
+.font-toggle-btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: width 0.3s ease, height 0.3s ease, top 0.3s ease, left 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+.font-toggle-btn:active::before {
+    width: 120px;
+    height: 120px;
+    top: 50%;
+    left: 50%;
+}
+
+/* Hover Effects */
+.font-toggle-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(44, 62, 80, 0.4);
+}
+
+.font-toggle-btn:hover.active {
+    box-shadow: 0 8px 30px rgba(52, 152, 219, 0.5);
+}
+
+/* Icon Animation */
+.font-toggle-btn i {
+    transition: transform 0.3s ease;
+    z-index: 1;
+    position: relative;
+}
+
+.font-toggle-btn.active i {
+    transform: rotate(180deg);
+}
+
+/* Swipe Indicator for Mobile */
+.swipe-indicator {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    z-index: 999;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.swipe-indicator.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .font-controls {
+        bottom: 15px;
+        right: -300px;
+        padding: 15px 20px;
+        min-width: 260px;
+        gap: 12px;
+    }
+
+    .font-toggle-btn {
+        width: 55px;
+        height: 55px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 18px;
+    }
+
+    .font-controls button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .font-size {
+        font-size: 14px;
+        min-width: 50px;
+        padding: 6px 10px;
+    }
+
+    .font-family-select {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .font-controls {
+        right: -280px;
+        min-width: 240px;
+        padding: 12px 15px;
+    }
+
+    .font-toggle-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 16px;
+    }
+}
+
+/* .font-controls button {
     width: 40px;
     height: 40px;
     border: none;
@@ -892,7 +1082,7 @@ h3 {
 .font-family-select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 8px rgba(91, 127, 191, 0.3);
-}
+} */
 
 /* ENHANCED MOBILE RESPONSIVENESS */
 @media (max-width: 768px) {
