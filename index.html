@@ -201,7 +201,7 @@
             <!-- Tab Contents -->
             <div id="intro" class="tab-content active">
                 <div class="memory-verse">
-                    <h1><b>🧠📝 Memory Verse</b></h1>
+                    <h2 style="color: white;font-size: 2rem;"><b>🧠📝 Memory Verse</b></h2>
                     <blockquote>
                         <b>
                             But we are all as an unclean thing, and all our
@@ -251,12 +251,12 @@
                     <h3><b>AIMS AND OBJECTIVES</b> 🎯📖💡</h3>
                     <p>
                         <strong>AIMS:</strong> To create the awarenness of the
-                        risk of self roghteousness.
+                        risk of self righteousness.
                     </p>
 
                     <p>
                         <strong>OBJECTIVES:</strong>
-                        That our righteousness may not me God forsaken but God
+                        That our righteousness may not be God forsaken but God
                         accepted.
                     </p>
                 </div>
@@ -278,13 +278,12 @@
                     <p><span>🌱🌷🌼🌿🌻🌺🍀🌳🌴🪴🏡🐝🐞</span> <br /></p>
 
                     <p>
-                        This man was not wrong when he considered jesus as the
+                        This man was not wrong when he considered Jesus as the
                         authority of God and came to him. However, his little
-                        adventure was to confirm that the trophy of
-                        righteousness he brought by his standard. Jesus, in
-                        response to him touched the are of his standard first
-                        and later his areas of failure that vandalises his
-                        righteousness.
+                        adventure was to confirm the trophy of righteousness he
+                        brought by his standard. Jesus, in response to him
+                        touched the are of his standard first and later his
+                        areas of failure that vandalises his righteousness.
                     </p>
 
                     <ol>
@@ -2080,28 +2079,6 @@
                 }
             });
         </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const trigger = document.getElementById("fruitTrigger");
-                const audio = document.getElementById("fruitSound");
-
-                let hasPlayed = sessionStorage.getItem("fruitSoundPlayed");
-
-                trigger.addEventListener("click", function () {
-                    // Animate
-                    trigger.classList.add("bounce");
-                    setTimeout(() => trigger.classList.remove("bounce"), 300);
-
-                    // Play sound only once per session
-                    if (!hasPlayed && audio) {
-                        audio.currentTime = 0;
-                        audio.play();
-                        sessionStorage.setItem("fruitSoundPlayed", "true");
-                        hasPlayed = true;
-                    }
-                });
-            });
-        </script>
 
         <!-- <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -2152,15 +2129,24 @@
             });
         </script> -->
         <script>
-            // Enhanced Mobile Font Controls JavaScript
+            // Enhanced Mobile Font Controls JavaScript - Fixed Version
             document.addEventListener("DOMContentLoaded", () => {
                 const panel = document.querySelector(".font-controls");
                 const toggleBtn = document.querySelector(".font-toggle-btn");
+                const themeToggle = document.querySelector(".theme-toggle");
                 let swipeIndicatorTimeout;
+
+                // In-memory storage (since localStorage isn't available)
+                let settings = {
+                    fontControlsIntroShown: false,
+                    preferredFontSize: 16,
+                    preferredFont: "'Segoe UI', sans-serif",
+                    theme: "dark",
+                };
 
                 // Show swipe indicator on first visit
                 function showSwipeIndicator() {
-                    if (!localStorage.getItem("fontControlsIntroShown")) {
+                    if (!settings.fontControlsIntroShown) {
                         const indicator = document.createElement("div");
                         indicator.className = "swipe-indicator";
                         indicator.innerHTML = "← Swipe or tap for font options";
@@ -2172,7 +2158,7 @@
                             setTimeout(() => indicator.remove(), 300);
                         }, 4000);
 
-                        localStorage.setItem("fontControlsIntroShown", "true");
+                        settings.fontControlsIntroShown = true;
                     }
                 }
 
@@ -2204,13 +2190,55 @@
                     toggleBtn.classList.remove("active");
                 }
 
+                // Theme toggle functionality
+                function toggleTheme() {
+                    const body = document.body;
+                    const isLightMode = body.classList.contains("light-mode");
+
+                    if (isLightMode) {
+                        body.classList.remove("light-mode");
+                        settings.theme = "dark";
+                        if (themeToggle) {
+                            themeToggle.innerHTML =
+                                '<i class="fas fa-moon"></i>';
+                        }
+                    } else {
+                        body.classList.add("light-mode");
+                        settings.theme = "light";
+                        if (themeToggle) {
+                            themeToggle.innerHTML =
+                                '<i class="fas fa-sun"></i>';
+                        }
+                    }
+                }
+
+                // Initialize theme
+                function initializeTheme() {
+                    if (themeToggle) {
+                        themeToggle.addEventListener("click", toggleTheme);
+                        // Set initial icon
+                        if (settings.theme === "light") {
+                            document.body.classList.add("light-mode");
+                            themeToggle.innerHTML =
+                                '<i class="fas fa-sun"></i>';
+                        } else {
+                            themeToggle.innerHTML =
+                                '<i class="fas fa-moon"></i>';
+                        }
+                    }
+                }
+
                 // Toggle via button click
-                toggleBtn.addEventListener("click", togglePanel);
+                if (toggleBtn) {
+                    toggleBtn.addEventListener("click", togglePanel);
+                }
 
                 // Close panel when clicking outside
                 document.addEventListener("click", (e) => {
                     if (
+                        panel &&
                         !panel.contains(e.target) &&
+                        toggleBtn &&
                         !toggleBtn.contains(e.target) &&
                         panel.classList.contains("show")
                     ) {
@@ -2260,7 +2288,7 @@
                         const timeDiff = endTime - startTime;
 
                         // Only trigger if it's a proper swipe (fast and horizontal)
-                        if (timeDiff < 300 && diffY < 100) {
+                        if (timeDiff < 300 && diffY < 100 && panel) {
                             const isVisible = panel.classList.contains("show");
 
                             if (diffX < -80 && isVisible) {
@@ -2291,6 +2319,7 @@
                     // Escape to close
                     if (
                         e.key === "Escape" &&
+                        panel &&
                         panel.classList.contains("show")
                     ) {
                         hidePanel();
@@ -2298,15 +2327,8 @@
                 });
 
                 // Font size controls
-                let currentFontSize =
-                    parseInt(localStorage.getItem("preferredFontSize")) || 16;
+                let currentFontSize = settings.preferredFontSize;
                 const fontSizeDisplay = document.querySelector(".font-size");
-                const increaseFontBtn = document.querySelector(
-                    '[onclick*="adjustFontSize(1)"]'
-                );
-                const decreaseFontBtn = document.querySelector(
-                    '[onclick*="adjustFontSize(-1)"]'
-                );
 
                 // Enhanced font size adjustment
                 function adjustFontSize(delta) {
@@ -2326,10 +2348,17 @@
                         fontSizeDisplay.textContent = `${currentFontSize}px`;
                     }
 
-                    // Save to localStorage
-                    localStorage.setItem("preferredFontSize", currentFontSize);
+                    // Save to in-memory storage
+                    settings.preferredFontSize = currentFontSize;
 
                     // Visual feedback
+                    const increaseFontBtn = document.querySelector(
+                        ".font-size-row button:last-child"
+                    );
+                    const decreaseFontBtn = document.querySelector(
+                        ".font-size-row button:first-child"
+                    );
+
                     if (delta > 0 && increaseFontBtn) {
                         increaseFontBtn.style.transform = "scale(1.3)";
                         setTimeout(
@@ -2345,25 +2374,27 @@
                     }
                 }
 
+                // Font family change function
+                function changeFont(fontFamily) {
+                    // Add transition for smooth font change
+                    document.body.style.transition = "font-family 0.3s ease";
+                    document.body.style.fontFamily = fontFamily;
+
+                    // Remove transition after change
+                    setTimeout(() => {
+                        document.body.style.transition = "";
+                    }, 300);
+
+                    settings.preferredFont = fontFamily;
+                }
+
                 // Font family change with smooth transition
                 const fontSelect = document.querySelector(
                     ".font-family-select"
                 );
                 if (fontSelect) {
                     fontSelect.addEventListener("change", (e) => {
-                        const fontFamily = e.target.value;
-
-                        // Add transition for smooth font change
-                        document.body.style.transition =
-                            "font-family 0.3s ease";
-                        document.body.style.fontFamily = fontFamily;
-
-                        // Remove transition after change
-                        setTimeout(() => {
-                            document.body.style.transition = "";
-                        }, 300);
-
-                        localStorage.setItem("preferredFont", fontFamily);
+                        changeFont(e.target.value);
                     });
                 }
 
@@ -2380,10 +2411,9 @@
                     }
 
                     // Load saved font family
-                    const savedFont = localStorage.getItem("preferredFont");
-                    if (savedFont && fontSelect) {
-                        document.body.style.fontFamily = savedFont;
-                        fontSelect.value = savedFont;
+                    if (settings.preferredFont && fontSelect) {
+                        document.body.style.fontFamily = settings.preferredFont;
+                        fontSelect.value = settings.preferredFont;
                     }
 
                     // Add scalable-text class to all text elements
@@ -2394,44 +2424,102 @@
                         .forEach((el) => el.classList.add("scalable-text"));
                 }
 
-                // Replace existing adjustFontSize function globally
+                // Make functions globally available
                 window.adjustFontSize = adjustFontSize;
+                window.changeFont = changeFont;
+                window.toggleTheme = toggleTheme;
 
                 // Initialize everything
                 initializeFontControls();
+                initializeTheme();
 
                 // Show intro indicator
-                setTimeout(showSwipeIndicator, 1000);
+                setTimeout(showSwipeIndicator, 2000);
+
+                // Add visual edge indicator for swipe gesture
+                function createSwipeEdgeIndicator() {
+                    const edgeIndicator = document.createElement("div");
+                    edgeIndicator.className = "swipe-edge-indicator";
+                    edgeIndicator.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        right: 0;
+                        width: 4px;
+                        height: 80px;
+                        background: linear-gradient(to bottom, transparent, var(--primary-color), transparent);
+                        transform: translateY(-50%);
+                        z-index: 998;
+                        opacity: 0;
+                        transition: all 0.3s ease;
+                        border-radius: 4px 0 0 4px;
+                    `;
+                    document.body.appendChild(edgeIndicator);
+
+                    // Show edge indicator periodically to hint at swipe functionality
+                    setTimeout(() => {
+                        edgeIndicator.style.opacity = "0.6";
+                        setTimeout(() => {
+                            edgeIndicator.style.opacity = "0";
+                        }, 2000);
+                    }, 3000);
+
+                    // Show edge indicator on hover near right edge
+                    document.addEventListener("mousemove", (e) => {
+                        if (
+                            e.clientX > window.innerWidth - 50 &&
+                            !panel.classList.contains("show")
+                        ) {
+                            edgeIndicator.style.opacity = "0.4";
+                        } else if (e.clientX < window.innerWidth - 100) {
+                            edgeIndicator.style.opacity = "0";
+                        }
+                    });
+
+                    return edgeIndicator;
+                }
+
+                // Create the edge indicator
+                const edgeIndicator = createSwipeEdgeIndicator();
 
                 // Auto-hide panel after 10 seconds of inactivity
                 let autoHideTimeout;
                 function resetAutoHide() {
                     clearTimeout(autoHideTimeout);
-                    if (panel.classList.contains("show")) {
+                    if (panel && panel.classList.contains("show")) {
                         autoHideTimeout = setTimeout(hidePanel, 10000);
                     }
                 }
 
-                panel.addEventListener("click", resetAutoHide);
-                panel.addEventListener("touchstart", resetAutoHide);
+                if (panel) {
+                    panel.addEventListener("click", resetAutoHide);
+                    panel.addEventListener("touchstart", resetAutoHide);
 
-                // Start auto-hide when panel is shown
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (
-                            mutation.type === "attributes" &&
-                            mutation.attributeName === "class"
-                        ) {
-                            if (panel.classList.contains("show")) {
-                                resetAutoHide();
-                            } else {
-                                clearTimeout(autoHideTimeout);
+                    // Start auto-hide when panel is shown
+                    const observer = new MutationObserver((mutations) => {
+                        mutations.forEach((mutation) => {
+                            if (
+                                mutation.type === "attributes" &&
+                                mutation.attributeName === "class"
+                            ) {
+                                if (panel.classList.contains("show")) {
+                                    resetAutoHide();
+                                } else {
+                                    clearTimeout(autoHideTimeout);
+                                }
                             }
-                        }
+                        });
                     });
-                });
 
-                observer.observe(panel, { attributes: true });
+                    observer.observe(panel, { attributes: true });
+                }
+
+                // Add close button functionality for font controls
+                const closeBtn = document.querySelector(
+                    ".font-controls-header i"
+                );
+                if (closeBtn) {
+                    closeBtn.addEventListener("click", hidePanel);
+                }
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
