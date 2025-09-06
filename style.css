@@ -28,11 +28,12 @@ body.light-mode {
     --secondary-color: #f8f9fa;
     --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     --gradient-secondary: linear-gradient(135deg, #f8f9fa, #e9ecef);
-    /* Button colors for light mode */
-    --verse-btn-bg: rgba(91, 127, 191, 0.1);
+    --gradient-primary: linear-gradient(135deg, #5b7fbf, #4a6da7);
+    /* FIXED: Button colors for light mode - now same visual style as dark mode */
+    --verse-btn-bg: rgba(91, 127, 191, 0.15);
     --verse-btn-border: rgba(91, 127, 191, 0.6);
     --verse-btn-text: #5b7fbf;
-    --verse-btn-hover-bg: rgba(91, 127, 191, 0.2);
+    --verse-btn-hover-bg: rgba(91, 127, 191, 0.25);
 }
 
 /* Base Styles with Enhanced Dark Theme */
@@ -372,8 +373,8 @@ h3 {
 
 /* Enhanced Memory Verse */
 .memory-verse {
-    background: var(--gradient-primary);
-    color: white;
+    /* background: var(--gradient-primary); */
+    color: var(--text-color);
     padding: 3rem;
     border-radius: 20px;
     margin: 2rem 0;
@@ -415,7 +416,7 @@ h3 {
     line-height: 1.8;
 }
 
-/* FIXED Enhanced Verse Buttons - Now visible in both light and dark modes */
+/* FIXED Enhanced Verse Buttons - Now consistent in both light and dark modes */
 .verse-btn {
     background: var(--verse-btn-bg);
     border: 2px solid var(--verse-btn-border);
