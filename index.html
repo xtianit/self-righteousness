@@ -157,7 +157,7 @@
             <i class="fas fa-moon"></i>
         </button>
 
-        <div class="container" style="margin-top: 70px;">
+        <div class="container" style="margin-top: 70px">
             <h1><b>SUNDAY SCHOOL LESSON</b></h1>
             <h2>
                 <b>DATE: <span>September 7, 2025</span></b>
@@ -205,8 +205,8 @@
                         style="
                             color: white;
                             font-size: 1.5rem;
-                            @media screen and (max: width 500px) {
-                                font-style: 1rem!important;
+                            @media screen and (max-width: 500px) {
+                                font-style: 1rem !important;
                             }
                         "
                     >
@@ -258,7 +258,7 @@
                 </p>
 
                 <div class="aims-objectives">
-                    <h3><b>AIMS AND OBJECTIVES</b> 🎯</h3>
+                    <h3><b>AIMS AND OBJECTIVES</b> 🎯📖💡</h3>
                     <p>
                         <strong>AIMS:</strong> To create the awarenness of the
                         risk of self righteousness.
@@ -1477,24 +1477,43 @@
 
             // Theme Toggle
 
-            function toggleTheme() {
-                const body = document.body;
-                const icon = document.querySelector(".theme-toggle i");
+            // function toggleTheme() {
+            //     const body = document.body;
+            //     const icon = document.querySelector(".theme-toggle i");
 
-                // Toggle light theme class
-                body.classList.toggle("light-theme");
+            //     // Toggle light theme class
+            //     body.classList.toggle("light-theme");
 
-                // Update icon
-                if (body.classList.contains("light-theme")) {
-                    icon.classList.remove("fa-moon");
-                    icon.classList.add("fa-sun");
-                    localStorage.setItem("theme", "light");
-                } else {
-                    icon.classList.remove("fa-sun");
-                    icon.classList.add("fa-moon");
-                    localStorage.setItem("theme", "dark");
-                }
+            //     // Update icon
+            //     if (body.classList.contains("light-theme")) {
+            //         icon.classList.remove("fa-moon");
+            //         icon.classList.add("fa-sun");
+            //         localStorage.setItem("theme", "light");
+            //     } else {
+            //         icon.classList.remove("fa-sun");
+            //         icon.classList.add("fa-moon");
+            //         localStorage.setItem("theme", "dark");
+            //     }
+            // }
+
+            document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            body.classList.toggle('light-mode');
+            
+            // Update icon
+            const icon = this.querySelector('i');
+            if (body.classList.contains('light-mode')) {
+                icon.className = 'fas fa-moon';
+            } else {
+                icon.className = 'fas fa-sun';
             }
+        });
+    }
+});
 
             // Load saved theme on page load
             document.addEventListener("DOMContentLoaded", () => {
@@ -2535,5 +2554,3 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
-
-
