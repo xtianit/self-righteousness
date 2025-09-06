@@ -140,7 +140,7 @@ body {
     border-radius: 50%;
     box-shadow: var(--shadow);
     transition: var(--transition);
-    animation: logoRotate 6s linear infinite;
+    /* animation: logoRotate 6s linear infinite; */
     filter: brightness(1.1);
 }
 
@@ -510,7 +510,7 @@ h3 {
         width: 90%;
         max-height: 85vh;
         border-radius: 15px;
-        
+
         top: 50px;
     }
 
@@ -783,10 +783,10 @@ h3 {
 }
 
 /* Enhanced Font Controls */
-.font-controls {
+/* .font-controls {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    right: -200px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -797,7 +797,58 @@ h3 {
     border: 1px solid var(--border-color);
     z-index: 1000;
     backdrop-filter: blur(10px);
+    display: none;
+} */
+
+/* Enhanced Font Controls */
+.font-controls {
+    position: fixed;
+    bottom: 20px;
+    right: -500px; /* Start fully hidden */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    padding: 12px 18px;
+    border-radius: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.font-controls.show {
+    right: 500px; /* Slide in when show class is added */
+}
+
+/* floating toggle button */
+.font-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    z-index: 1100; /* above panel */
+    transition: background 0.3s ease;
+}
+
+.font-toggle-btn:hover {
+    background: var(--secondary-color);
+}
+
+
+
 
 .font-controls button {
     width: 40px;
@@ -1067,5 +1118,3 @@ h3 {
         box-shadow: 0 8px 25px rgba(91, 127, 191, 0.6);
     }
 }
-
-
