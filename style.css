@@ -805,10 +805,13 @@ h3 {
 /* floating toggle button */
 
 /* Enhanced Mobile-Friendly Font Controls - Hidden by Default */
+/* Enhanced Font Controls - Hidden by Default with Swipe Functionality */
+
+/* Font Controls Panel - Starts Hidden */
 .font-controls {
     position: fixed;
     bottom: 20px;
-    right: -320px; /* Start fully hidden */
+    right: -340px; /* Start completely hidden - increased width to ensure full hide */
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -821,10 +824,20 @@ h3 {
     backdrop-filter: blur(15px);
     transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     min-width: 280px;
+    max-height: 300px;
+    overflow: hidden;
 }
 
+/* Show state - slides in from right */
 .font-controls.show {
-    right: 0; /* Slide in when show class is added */
+    right: 0;
+    animation: slideInFromRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide animation */
+.font-controls.hide {
+    right: -340px;
+    animation: slideOutToRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Font Controls Header */
@@ -836,6 +849,27 @@ h3 {
     color: var(--primary-color);
     font-weight: 600;
     font-size: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.font-controls-header i {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.font-controls-header i:hover {
+    opacity: 1;
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
 }
 
 /* Font Size Controls Row */
@@ -844,6 +878,7 @@ h3 {
     align-items: center;
     gap: 15px;
     justify-content: center;
+    margin: 10px 0;
 }
 
 .font-controls button {
@@ -860,6 +895,26 @@ h3 {
     justify-content: center;
     font-weight: 600;
     font-size: 18px;
+    position: relative;
+    overflow: hidden;
+}
+
+.font-controls button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.font-controls button:active::before {
+    width: 100px;
+    height: 100px;
 }
 
 .font-controls button:hover {
@@ -877,6 +932,7 @@ h3 {
     padding: 8px 12px;
     border-radius: 15px;
     border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
 }
 
 .font-family-select {
@@ -889,14 +945,21 @@ h3 {
     outline: none;
     transition: var(--transition);
     width: 100%;
+    cursor: pointer;
 }
 
 .font-family-select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 8px rgba(91, 127, 191, 0.3);
+    transform: scale(1.02);
 }
 
-/* Stunning Toggle Button */
+.font-family-select:hover {
+    border-color: var(--primary-color);
+    background: var(--secondary-color);
+}
+
+/* Enhanced Toggle Button */
 .font-toggle-btn {
     position: fixed;
     bottom: 25px;
@@ -916,7 +979,6 @@ h3 {
     z-index: 1100;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    position: relative;
 }
 
 /* Toggle Button Active State */
@@ -947,7 +1009,6 @@ h3 {
     left: 50%;
 }
 
-/* Hover Effects */
 .font-toggle-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(44, 62, 80, 0.4);
@@ -957,7 +1018,6 @@ h3 {
     box-shadow: 0 8px 30px rgba(52, 152, 219, 0.5);
 }
 
-/* Icon Animation */
 .font-toggle-btn i {
     transition: transform 0.3s ease;
     z-index: 1;
@@ -968,26 +1028,97 @@ h3 {
     transform: rotate(180deg);
 }
 
-/* Swipe Indicator for Mobile */
+/* Swipe Indicator Styling */
 .swipe-indicator {
     position: fixed;
     bottom: 100px;
     right: 20px;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.85);
     color: white;
-    padding: 8px 12px;
+    padding: 10px 15px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 13px;
     z-index: 999;
     opacity: 0;
     transform: translateX(20px);
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     pointer-events: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .swipe-indicator.show {
     opacity: 1;
     transform: translateX(0);
+}
+
+.swipe-indicator::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid rgba(0, 0, 0, 0.85);
+    transform: translateY(-50%);
+}
+
+/* Swipe Edge Indicator */
+.swipe-edge-indicator {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    width: 4px;
+    height: 80px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--primary-color),
+        transparent
+    );
+    transform: translateY(-50%);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.3s ease;
+    border-radius: 4px 0 0 4px;
+    box-shadow: -2px 0 8px rgba(91, 127, 191, 0.3);
+}
+
+.swipe-edge-indicator::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -2px;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(91, 127, 191, 0.2),
+        transparent
+    );
+    border-radius: 6px 0 0 6px;
+}
+
+/* Tutorial Message Styling */
+.swipe-tutorial {
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    backdrop-filter: blur(5px);
 }
 
 /* Mobile Responsive Adjustments */
@@ -998,6 +1129,11 @@ h3 {
         padding: 15px 20px;
         min-width: 260px;
         gap: 12px;
+        border-radius: 20px 0 0 20px;
+    }
+
+    .font-controls.show {
+        right: 0;
     }
 
     .font-toggle-btn {
@@ -1024,6 +1160,13 @@ h3 {
         padding: 10px 12px;
         font-size: 13px;
     }
+
+    .swipe-indicator {
+        bottom: 90px;
+        right: 15px;
+        font-size: 12px;
+        padding: 8px 12px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1037,7 +1180,58 @@ h3 {
         width: 50px;
         height: 50px;
         font-size: 16px;
+        bottom: 15px;
+        right: 15px;
     }
+
+    .swipe-indicator {
+        bottom: 80px;
+        font-size: 11px;
+    }
+}
+
+/* Slide Animations */
+@keyframes slideInFromRight {
+    0% {
+        right: -340px;
+        opacity: 0;
+    }
+    100% {
+        right: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToRight {
+    0% {
+        right: 0;
+        opacity: 1;
+    }
+    100% {
+        right: -340px;
+        opacity: 0;
+    }
+}
+
+/* Pulse animation for edge indicator */
+@keyframes edgePulse {
+    0% {
+        opacity: 0.4;
+        transform: translateY(-50%) scaleX(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-50%) scaleX(1.5);
+    }
+    100% {
+        opacity: 0.4;
+        transform: translateY(-50%) scaleX(1);
+    }
+}
+
+/* Show edge pulse animation when hovering near edge */
+.swipe-edge-indicator.pulse {
+    animation: edgePulse 1.5s infinite;
 }
 
 /* .font-controls button {
@@ -1108,13 +1302,6 @@ h3 {
 
     .reflection-card {
         padding: 1.5rem;
-    }
-
-    .font-controls {
-        bottom: 15px;
-        right: 15px;
-        padding: 10px 15px;
-        gap: 8px;
     }
 
     .font-controls button {
